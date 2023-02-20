@@ -43,9 +43,9 @@ void hop(vector<double>& sh_prob,int& hopstate,int numstates){
 
   // But, to avoid the problems, lets renormalize the hopping probabilities
   double nrm = 0.0;
-  for(i=0;i<numstates;i++){  nrm += sh_prob[in*numstates+i];  }  
+  for(int i=0;i<numstates;i++){  nrm += sh_prob[in*numstates+i];  }  
 
-  for(i=0;i<numstates;i++){
+  for(int i=0;i<numstates;i++){
     if(i==0){ left = 0.0; right = (sh_prob[in*numstates+i]/nrm); }
     else{ left = right;   right += (sh_prob[in*numstates+i]/nrm); }
     if((left<ksi) && (ksi<=right)){ hstate = i; }
@@ -122,18 +122,18 @@ double decoherence_rates(vector<double>& x,double dt,std::string rt_dir,int regr
 
   // Calculate first "cumulants" int_0_t C(t) dt ,for all t
   double sum = 0.0;
-  for(t=0;t<sz;t++){ IC[t] = sum;  sum +=  C[t]*(dt/hbar); }
+  for(int t=0;t<sz;t++){ IC[t] = sum;  sum +=  C[t]*(dt/hbar); }
 
   // Calculate second "cumulants" int_0_t IC(t) dt ,for all t
   sum = 0.0;
-  for(t=0;t<sz;t++){ IIC[t] = sum; sum += IC[t]*(dt/hbar); }
+  for(int t=0;t<sz;t++){ IIC[t] = sum; sum += IC[t]*(dt/hbar); }
 
   // Calculate D(t), see Madrid, et. al
-  for(t=0;t<sz;t++){ D[t] = exp(-IIC[t]); }
+  for(int t=0;t<sz;t++){ D[t] = exp(-IIC[t]); }
 
   // Normalize the autocorrelation function to C[0]
   double nrm = C[0];
-  for(t=0;t<sz;t++){ C[t] /= nrm; }
+  for(int t=0;t<sz;t++){ C[t] /= nrm; }
 
   //===== Part 2: Phonon spectrum (spectral density function) ============
   // Do FT of the normalized autocorrelation function
@@ -158,7 +158,7 @@ double decoherence_rates(vector<double>& x,double dt,std::string rt_dir,int regr
 
   // Output D and its model(based on the fitted parameters)
   ofstream out1((rt_dir+"Spectral_density.txt").c_str(),ios::out);
-  for(w=0;w<Npoints;w++){ out1<<"w(eV)= "<<w*dE<<" w(cm^-1)= "<<w*dE*8065.54468111324<<" J= "<<J[w]
+  for(int w=0;w<Npoints;w++){ out1<<"w(eV)= "<<w*dE<<" w(cm^-1)= "<<w*dE*8065.54468111324<<" J= "<<J[w]
                              <<" sqrt(J)= "<<sqrt(J[w])<<endl;
   }
   out1.close();
@@ -171,7 +171,7 @@ double decoherence_rates(vector<double>& x,double dt,std::string rt_dir,int regr
   // If eps = 0.1 => -ln(eps) = 2.3
   //    eps = 0.01 => -ln(eps) = 4.6
   int first = 1;  // this is correction to avoid recurrences!
-  for(t=0;t<sz;t++){
+  for(int t=0;t<sz;t++){
     if(first){
       if(IIC[t]<2.3){ 
         T.push_back(t*t*dt*dt); 
@@ -194,7 +194,7 @@ double decoherence_rates(vector<double>& x,double dt,std::string rt_dir,int regr
   // Output D and its model(based on the fitted parameters)
   ofstream out((rt_dir+"Dephasing_function.txt").c_str(),ios::out);
   out<<"Time    D(t)       fitted D(t)     Normalized_autocorrelation_function  Unnormalized_autocorrelation_function   Second cumulant\n";
-  for(t=0;t<sz;t++){  out<<t*dt<<"  "<<D[t]<<"  "<<exp(-a) * exp(-b*t*t*dt*dt)<<"  "<<C[t]<<" "<<nrm*C[t]<<"  "<<IIC[t]<<"\n";  }
+  for(int t=0;t<sz;t++){  out<<t*dt<<"  "<<D[t]<<"  "<<exp(-a) * exp(-b*t*t*dt*dt)<<"  "<<C[t]<<" "<<nrm*C[t]<<"  "<<IIC[t]<<"\n";  }
   out.close();
 
   return sqrt(b);
@@ -432,10 +432,10 @@ void solve_electronic(InputStructure& is,vector<ElectronicStructure>& es,matrix&
         cout<<endl;
       }
       cout<<"Hopping probabilities:\n";
-      for(j=0;j<es[i].num_states;j++){ cout<<"P( "<<es[i].curr_state<<" --> "<<j<<" )= "<<setprecision(10)<<es[i].g[es[i].curr_state*es[i].num_states+j]<<endl; }
+      for(int j=0;j<es[i].num_states;j++){ cout<<"P( "<<es[i].curr_state<<" --> "<<j<<" )= "<<setprecision(10)<<es[i].g[es[i].curr_state*es[i].num_states+j]<<endl; }
       cout<<"Coefficients: \n";
       double norm = 0.0;
-      for(j=0;j<es[i].num_states;j++){ cout<<"c["<<j<<"] = "<<es[i].Ccurr->M[j].real()<<" + "<<es[i].Ccurr->M[j].imag()<<"i \n"; norm += (conj(es[i].Ccurr->M[j])*es[i].Ccurr->M[j]).real(); }
+      for(int j=0;j<es[i].num_states;j++){ cout<<"c["<<j<<"] = "<<es[i].Ccurr->M[j].real()<<" + "<<es[i].Ccurr->M[j].imag()<<"i \n"; norm += (conj(es[i].Ccurr->M[j])*es[i].Ccurr->M[j]).real(); }
       cout<<"Norm = "<<norm<<endl;
     }
 
@@ -466,7 +466,7 @@ void run_decoherence_rates(InputStructure& is, vector<ElectronicStructure>& me_e
         }
         ave_dEij /= ((double)sz);
         // Subtract the average value
-        for(t=0;t<sz;t++){ Eij[t] -= ave_dEij; }
+        for(int t=0;t<sz;t++){ Eij[t] -= ave_dEij; }
 
         // Compute the decoherence rate for pair i,j
         rij.M[i*N+j] = decoherence_rates(Eij,is.nucl_dt,is.scratch_dir+"/icond"+int2string(icond)+"pair"+int2string(i)+"_"+int2string(j),is.regress_mode);
@@ -514,7 +514,7 @@ void run_namd(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_s
   int curr_state;
   double** sh_pops; // sh_pops[t][i] = population at state i at time t
   sh_pops = new double*[is.namdtime];
-  for(i=0;i<sz;i++){
+  for(int i=0;i<sz;i++){
     sh_pops[i] = new double[me_es[i].num_states];
     for(int j=0;j<me_es[i].num_states;j++){  sh_pops[i][j] = 0.0;  }// j
   }// i
@@ -522,7 +522,7 @@ void run_namd(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_s
   // Do the hops
   for(int n=0;n<is.num_sh_traj;n++){
     curr_state = me_es[0].curr_state;
-    for(i=0;i<sz;i++){
+    for(int i=0;i<sz;i++){
       hop(me_es[i].g,curr_state,me_es[i].num_states);
       sh_pops[i][curr_state] += 1.0;
     }// for namdtime
@@ -530,7 +530,7 @@ void run_namd(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_s
 
   outfile = is.scratch_dir+"/out"+int2string(icond);
   out.open(outfile.c_str(),ios::out);
-  for(i=0;i<sz;i++){
+  for(int i=0;i<sz;i++){
     out<<"time "<<i<<" ";
     for(int j=0;j<me_es[0].num_states;j++){
       sh_pops[i][j] = sh_pops[i][j]/((double)is.num_sh_traj);
@@ -540,7 +540,7 @@ void run_namd(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_s
   }
   out.close();
 
-  for(i=0;i<sz;i++){ delete [] sh_pops[i]; }
+  for(int i=0;i<sz;i++){ delete [] sh_pops[i]; }
   delete [] sh_pops;
 
 }
@@ -598,9 +598,9 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
       int i,j,t;
 
       // Compute means
-      for(i=0;i<nst;i++){
-        for(j=0;j<nst;j++){
-          for(t=0;t<sz;t++){
+      for(int i=0;i<nst;i++){
+        for(int j=0;j<nst;j++){
+          for(int t=0;t<sz;t++){
             E0[i][j] += (me_es[t].Hcurr->M[i*nst+i].real() - me_es[t].Hcurr->M[j*nst+j].real());
           }// for t
           E0[i][j] /= ((double)sz);
@@ -608,9 +608,9 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
       }// for i
 
       // Compute average fluctuations
-      for(i=0;i<nst;i++){
-        for(j=0;j<nst;j++){
-          for(t=0;t<sz;t++){
+      for(int i=0;i<nst;i++){
+        for(int j=0;j<nst;j++){
+          for(int t=0;t<sz;t++){
             double de = ((me_es[t].Hcurr->M[i*nst+i].real() - me_es[t].Hcurr->M[j*nst+j].real()) - E0[i][j]);
 
             d2E_av[i][j] += de*de;
@@ -622,12 +622,12 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
 
 
 
-      for(t=0;t<sz;t++){
+      for(int t=0;t<sz;t++){
 
         out<<"t= "<<t<<"  ";
         // Scale Hamiltonian (off-diagonal elements)
-        for(i=0;i<nst;i++){
-          for(j=0;j<nst;j++){
+        for(int i=0;i<nst;i++){
+          for(int j=0;j<nst;j++){
             if(i!=j){
               // My original version
 //              double dEij = (me_es[t].Hcurr->M[i*nst+i].real() - me_es[t].Hcurr->M[j*nst+j].real()) - E0[i][j]; 
@@ -663,9 +663,9 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
       int i,j,t;
 
       // Compute means
-      for(i=0;i<nst;i++){
-        for(j=0;j<nst;j++){
-          for(t=0;t<sz;t++){
+      for(int i=0;i<nst;i++){
+        for(int j=0;j<nst;j++){
+          for(int t=0;t<sz;t++){
             E0[i][j] += (me_es[t].Hcurr->M[i*nst+i].real() - me_es[t].Hcurr->M[j*nst+j].real()); 
           }// for t
           E0[i][j] /= ((double)sz);
@@ -678,8 +678,8 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
       int Npoints = 400*5; // cover 5 eV range of energies
       vector< vector<vector<double> > > J(nst, vector< vector<double> >(nst,vector<double>(Npoints,0.0)));
 
-      for(i=0;i<nst;i++){
-        for(j=0;j<nst;j++){
+      for(int i=0;i<nst;i++){
+        for(int j=0;j<nst;j++){
           if(i!=j){
     
             cout<<"Reading spectral density for this initial condition...\n";
@@ -710,7 +710,7 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
             }// for w
 
             // Now we are ready to scale the gap for i->j transition for all times
-            for(t=0;t<sz;t++){
+            for(int t=0;t<sz;t++){
         out<<"t= "<<t<<"  ";
 
               double dEij = (me_es[t].Hcurr->M[i*nst+i].real() - me_es[t].Hcurr->M[j*nst+j].real());
@@ -931,7 +931,7 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
     me_es[0].t_m[0] = 0.0; // Time since last hop
 
     // Loop over time
-    for(i=0;i<sz;i++){
+    for(int i=0;i<sz;i++){
 
       //============ Solve TD-SE and do SH ============
       // Set coefficients and state from previous time step to be current ones
@@ -999,7 +999,7 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
 
       // Accumulate SE and SH probabilities for all states
       sh_pops[i][curr_state] += 1.0;
-      for(j=0;j<nst;j++){ se_pops[i][j] += me_es[i].A->M[j*nst+j].real(); }
+      for(int j=0;j<nst;j++){ se_pops[i][j] += me_es[i].A->M[j*nst+j].real(); }
 
     }// namdtime
   }// for num_sh_traj
@@ -1012,17 +1012,17 @@ void run_namd1(InputStructure& is, vector<ElectronicStructure>& me_es,vector<me_
   outfile2 = is.scratch_dir+"/out"+int2string(icond);
   out2.open(outfile2.c_str(),ios::out);
 
-  for(i=0;i<sz;i++){
+  for(int i=0;i<sz;i++){
     //---------- SE probabilities ----------
     out1<<"time "<<i<<" "; double tot = 0.0;
-    for(j=0;j<nst;j++){
+    for(int j=0;j<nst;j++){
       se_pops[i][j] /= ((double)is.num_sh_traj);
       out1<<"P("<<j<<")= "<<setprecision(10)<<se_pops[i][j]<<"  ";tot += se_pops[i][j];
     } out1<<"Total= "<<tot<<endl;
 
     //--------- SH probabilities ----------
     out2<<"time "<<i<<" ";
-    for(j=0;j<nst;j++){
+    for(int j=0;j<nst;j++){
       sh_pops[i][j] /= ((double)is.num_sh_traj);
       out2<<"P("<<j<<")= "<<setprecision(10)<<sh_pops[i][j]<<" ";
     } out2<<endl;

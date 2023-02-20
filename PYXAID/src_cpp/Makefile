@@ -1,18 +1,12 @@
 FLAGS= -fno-for-scope -O2 -fPIC
-CPP=c++
-# BOOST
-# UB CCR
-p1=/util/academic/boost/v1.57.0/include/boost
-pl1=/util/academic/boost/v1.57.0/lib
-
-# PYTHON
-# UB CCR
-p2=/util/academic/python/2.7.6/include/python2.7
-pl2=/util/academic/python/2.7.6/lib
-
+CPP= c++
+# IDENTIFY YOUR INCLUDE PATH WHICH CONTAIN BOOST AND PYTHON
+p1=${CONDA_PREFIX}/include
+p2=${p1}/python*
+pl1=${CONDA_PREFIX}/lib
 
 I=-I ${p1} -I ${p2}
-L=-L ${pl1} -L ${pl2}
+L=-L ${pl1}
 
 all: pyxaid_core.so
 
