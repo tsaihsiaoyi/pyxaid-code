@@ -43,7 +43,7 @@ def xdatcar2inp(out_filename,templ_filename,wd,prefix,t0,tmax,dt):
 
     # Read the file
     if verbose==1:
-        print "Reading file", out_filename
+        print("Reading file", out_filename)
 
     out_file = open(out_filename,"r")
     f = out_file.readlines()
@@ -70,7 +70,7 @@ def xdatcar2inp(out_filename,templ_filename,wd,prefix,t0,tmax,dt):
 
     types = f[5].split()   # atomic types
     ntyp = len(types)   # number of atomic types
-    print types
+    print(types)
       
 
     tmp = f[6].split()
@@ -81,7 +81,7 @@ def xdatcar2inp(out_filename,templ_filename,wd,prefix,t0,tmax,dt):
         nat.append(nelt)
         totnat = totnat + nelt
 
-    print nat
+    print(nat)
 
 
     x = []

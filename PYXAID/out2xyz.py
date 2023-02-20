@@ -49,7 +49,7 @@ def convert(out_filename,T,dt,xyz_filename):
 
     # Read the file
     if verbose==1:
-        print "Reading file", out_filename
+        print("Reading file", out_filename)
     f = open(out_filename,"r")
 
     fr = open(xyz_filename,"w")

@@ -35,7 +35,7 @@ def calculate(energy_prefix,energy_suffix,dip_prefix,dip_suffix,isnap,fsnap,opt,
     a = f.readline()
     f.close()
     sz = len(a.split())
-    print "Map size is %d by %d" % (sz,sz)
+    print("Map size is %d by %d" % (sz,sz))
 
     HOMO = HOMO - 1 # now it has the meaning of the index rather than id
 
@@ -67,7 +67,7 @@ def calculate(energy_prefix,energy_suffix,dip_prefix,dip_suffix,isnap,fsnap,opt,
     for k in range(isnap,fsnap+1):
         filename = dip_prefix + str(k) + dip_suffix
         e_filename = energy_prefix + str(k) + energy_suffix
-        print "Reading files ",filename, e_filename
+        print("Reading files ",filename, e_filename)
 
         if(os.path.exists(filename) and os.path.exists(e_filename)):
 
@@ -174,7 +174,7 @@ def ham_map(prefix,isnap,fsnap,suffix,opt,scl,outfile):
     a = f.readline()
     f.close()
     sz = len(a.split())
-    print "Map size is %d by %d" % (sz,sz)
+    print("Map size is %d by %d" % (sz,sz))
 
     #========= Prepare storage ============
     M = []
@@ -193,7 +193,7 @@ def ham_map(prefix,isnap,fsnap,suffix,opt,scl,outfile):
    
     for k in range(isnap,fsnap+1):
         filename = prefix + str(k) + suffix
-        print "Reading file ",filename
+        print("Reading file ",filename)
 
         if(os.path.exists(filename)):
 
@@ -262,7 +262,7 @@ def ham_map1(energy_prefix,energy_suffix,prefix,isnap,fsnap,suffix,opt,scl1,scl2
     a = f.readline()
     f.close()
     sz = len(a.split())
-    print "Map size is %d by %d" % (sz,sz)
+    print("Map size is %d by %d" % (sz,sz))
 
     #========= Prepare storage ============
     M = []
@@ -284,7 +284,7 @@ def ham_map1(energy_prefix,energy_suffix,prefix,isnap,fsnap,suffix,opt,scl1,scl2
     for k in range(isnap,fsnap+1):
         filename = prefix + str(k) + suffix
         e_filename = energy_prefix + str(k) + energy_suffix
-        print "Reading files ",filename, e_filename
+        print("Reading files ",filename, e_filename)
 
         if(os.path.exists(filename) and os.path.exists(e_filename)):
 
@@ -314,7 +314,7 @@ def ham_map1(energy_prefix,energy_suffix,prefix,isnap,fsnap,suffix,opt,scl1,scl2
 
                     j = j + 1
                 E[i] = E[i] + y
-#                print i,y
+#                print(i,y)
                 i = i + 1
 
             count = count + 1.0

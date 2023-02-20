@@ -71,7 +71,7 @@ def fermi_energy(bnds, Nel, degen):
           i_r = i_m
           ef_r = ef_m
       else:
-          print "Error in fermi_energy\n"
+          print("Error in fermi_energy\n")
           exit(0) 
       
       err = 0.5*(i_r - i_l)

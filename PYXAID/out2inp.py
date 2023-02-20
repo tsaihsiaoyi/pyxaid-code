@@ -43,7 +43,7 @@ def out2inp(out_filename,templ_filename,wd,prefix,t0,tmax,dt):
 
     # Read the file
     if verbose==1:
-        print "Reading file", out_filename
+        print("Reading file", out_filename)
     f = open(out_filename,"r")
 
     f_t = open("%s/tmp" % wd, "w")

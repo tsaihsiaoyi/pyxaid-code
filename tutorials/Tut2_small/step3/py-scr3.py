@@ -120,7 +120,7 @@ for i in range(0,nmicrost):
 #############################################################################################
 
 ############ Run calculations ######################
-print params                   # print out all simulation parameters first
+print(params)                   # print out all simulation parameters first
 pyxaid_core.info().version()
 pyxaid_core.namd(params)
 

@@ -123,7 +123,7 @@ for se in SE:
 #############################################################################################
 
 ############ Run calculations ######################
-print params                   # print out all simulation parameters first
+print(params)                   # print out all simulation parameters first
 pyxaid_core.info().version()
 pyxaid_core.namd(params)
 

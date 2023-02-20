@@ -74,10 +74,10 @@ def average(namdtime,num_states,iconds,opt,MS,inp_dir,res_dir):
             dist_ex.append(e)
         i = i + 1
 
-    print "All initial conditions", all_ex
-    print "Distinct initial excitations", dist_ex
-    print "Number of initial conditions = ", len(all_ex)
-    print "Number distinct initial excitations = ", len(dist_ex)
+    print("All initial conditions", all_ex)
+    print("Distinct initial excitations", dist_ex)
+    print("Number of initial conditions = ", len(all_ex))
+    print("Number distinct initial excitations = ", len(dist_ex))
 
 
 #>>>>>>>>>>>>>>>>>>>>> MAIN PROGRAM <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -94,10 +94,10 @@ def average(namdtime,num_states,iconds,opt,MS,inp_dir,res_dir):
     if opt==1 or opt==12:
 
         for in_ex in dist_ex:
-            print "initial excitation = ", in_ex
+            print("initial excitation = ", in_ex)
 
             # Initialize populations for given initial excitation
-            print "initialization..."
+            print("initialization...")
             num_runs = 0.0
 
             P = [] #sh populations
@@ -123,7 +123,7 @@ def average(namdtime,num_states,iconds,opt,MS,inp_dir,res_dir):
                 t = t + 1
 
             # Look only for those files which correspond to given initial excitation
-            print "calculation..."
+            print("calculation...")
             i = 0
             while i<len(all_ex):
                 if all_ex[i]==in_ex:
@@ -138,7 +138,7 @@ def average(namdtime,num_states,iconds,opt,MS,inp_dir,res_dir):
                     pe = sum_mult_arrays(eE,pP)
                     #P = add_arrays(P,pP)
                     EP = add_arrays(EP,pe)
-                    #print len(pP),len(pP[0]),len(MS),len(MS[0])
+                    #print(len(pP),len(pP[0]),len(MS),len(MS[0]))
                     cpP = contract_array(pP,ms) # Dimension:  T x num_macro_states
                     P = add_arrays(P,cpP)
 
@@ -154,7 +154,7 @@ def average(namdtime,num_states,iconds,opt,MS,inp_dir,res_dir):
                     #================================================================
 
                 i = i + 1
-            print "Number of runs for this excitations = ", num_runs
+            print("Number of runs for this excitations = ", num_runs)
 
 #            write_array(res_dir+"/sh_pop_ex",in_ex,namdtime,num_states,P,num_runs)
 #            write_array(res_dir+"/se_pop_ex",in_ex,namdtime,num_states,C,num_runs)
@@ -172,10 +172,10 @@ def average(namdtime,num_states,iconds,opt,MS,inp_dir,res_dir):
 
         i = 0
         while i<num_macro_states:
-            print "initial macro-excitation = ", i
+            print("initial macro-excitation = ", i)
 
             # Initialize populations for given initial excitation
-            print "initialization..."
+            print("initialization...")
 
             P = [] #sh populations of macrostates
             C = [] #SE populations of macrostates
@@ -199,10 +199,10 @@ def average(namdtime,num_states,iconds,opt,MS,inp_dir,res_dir):
                 t = t + 1
 
             # Look only for those files which correspond to given initial excitation
-            print "calculation..."
+            print("calculation...")
             j = 0
             num_runs = len(MS[i])  # Number of microstates corresponding to given macrostate
-            print "Number of microstates for this macrostate = ", num_runs
+            print("Number of microstates for this macrostate = ", num_runs)
 
             while j<num_runs:
                 # Then file sh_pop<MS[i][j]> -corresponds to given initial excitation

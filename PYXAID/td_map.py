@@ -29,8 +29,8 @@ def make_map(enfile,popfile,outfile,do_sort):
     x = len(A[0].split())  # number of columns
     Nst = (x-4)/2  # number of states
 
-    print "T = ", T
-    print "Number of states = ", Nst
+    print("T = ", T)
+    print("Number of states = ", Nst)
 
     # Processing input files
     E = []  # energies

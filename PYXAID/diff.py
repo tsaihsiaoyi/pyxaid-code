@@ -21,14 +21,14 @@ def diff(out_filename,t0,T,at,res_filename,opt):
 # opt - option: = 0 - the diffusion coefficient is calculated
 #               = 1 - the "reaction-coordinate" is calculates (mean-square displacement per time step)
 
-    print "Running diff function in module diff"
-    print "Arguments are:"
-    print " out_filename=",out_filename
-    print " t0 = ",t0
-    print " T = ", T
-    print " at = ", at
-    print " res_filename = ", res_filename
-    print " opt = ", opt
+    print("Running diff function in module diff")
+    print("Arguments are:")
+    print(" out_filename=",out_filename)
+    print(" t0 = ",t0)
+    print(" T = ", T)
+    print(" at = ", at)
+    print(" res_filename = ", res_filename)
+    print(" opt = ", opt)
 
     sz = len(at)  # number of groups of atoms
     Rprev = []
@@ -51,7 +51,7 @@ def diff(out_filename,t0,T,at,res_filename,opt):
         D.append(d)
          
 
-    #print D
+    #print(D)
     Dtot = range(0,sz)  # total diffusion coefficient for each group
     i = 0
     while i<sz:
@@ -128,7 +128,7 @@ def diff(out_filename,t0,T,at,res_filename,opt):
                             indx[i] = indx[i] + 1
                         i = i + 1
             else:
-                # Print D:
+                # Print(D)
                 if t-t0>=0.0:
                     line = str(t-t0)+"  "
                     i = 0
@@ -157,31 +157,31 @@ def diff(out_filename,t0,T,at,res_filename,opt):
                 if a.find("number of atoms/cell")!=-1:
                     tmp = a.split()
                     nat = int(float(tmp[4]))
-                    #print "nat = %5d" % nat
+                    #print("nat = %5d" % nat)
                     is_nat = 1
             if is_a1==0:
                 if a.find("a(1) =")!=-1:
                     tmp = a.split()
                     a1 = [float(tmp[3]),float(tmp[4]),float(tmp[5])]
-                    #print "a1 = ", a1
+                    #print("a1 = ", a1)
                     is_a1 = 1
             if is_a2==0:
                 if a.find("a(2) =")!=-1:
                     tmp = a.split()
                     a2 = [float(tmp[3]),float(tmp[4]),float(tmp[5])]
-                    #print "a2 = ", a2
+                    #print("a2 = ", a2)
                     is_a2 = 1
             if is_a3==0:
                 if a.find("a(3) =")!=-1:
                     tmp = a.split()
                     a3 = [float(tmp[3]),float(tmp[4]),float(tmp[5])]
-                    #print "a3 = ", a3
+                    #print("a3 = ", a3)
                     is_a3 = 1
             if is_alat==0:
                 if a.find("lattice parameter (alat)  =")!=-1:
                     tmp = a.split()
                     alat = float(tmp[4])
-                    #print "alat = ", alat
+                    #print("alat = ", alat)
                     is_alat = 1
 
             else:

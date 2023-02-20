@@ -13,11 +13,11 @@ import math
 def convolve(X, dx0, dx, var):
 
     mult = int(dx0/dx)  # making grid mult times bigger
-    print "multiplication factor is = ", mult
+    print("multiplication factor is = ", mult)
 #    var = var0/float(mult)
-    print "original grid spacing = ", dx0
-    print "new grid spacing = ", dx
-    print "gaussian variance = ", var
+    print("original grid spacing = ", dx0)
+    print("new grid spacing = ", dx)
+    print("gaussian variance = ", var)
        
  
     # Prepare arrays
@@ -109,7 +109,7 @@ def sum_pdos(prefix,lst,nat,symb_lst,out,E_f,nspin,do_convolve,dx0,dx,var,PT):
                     filename = prefix+str(j)+"("+Elt+")_wfc#"+str(wfc)+"("+symb+")"  # first file
             
                     if(os.path.exists(filename) and stat==0):
-                        print "First file is ", filename
+                        print("First file is ", filename)
             
                         f = open(filename,'r')
                         A = f.readlines()
@@ -142,7 +142,7 @@ def sum_pdos(prefix,lst,nat,symb_lst,out,E_f,nspin,do_convolve,dx0,dx,var,PT):
     T = len(XP)
     X = nspin + 1  # Only total (for unpolarized) and total up + total down (for spin-polarized) 
 
-    print "Dimensions are: ", T, "by", X
+    print("Dimensions are: ", T, "by", X)
 
 
 # Read all files from the list
@@ -157,7 +157,7 @@ def sum_pdos(prefix,lst,nat,symb_lst,out,E_f,nspin,do_convolve,dx0,dx,var,PT):
                     
                     if os.path.exists(filename):
 
-                        print "using file", filename
+                        print("using file", filename)
             
                         f = open(filename,'r')
                         A = f.readlines()

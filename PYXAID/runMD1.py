@@ -25,8 +25,8 @@ def get_value(params,key,default,typ):
         pass  # All is ok
     else: 
         str_val = default
-        print "Warning: Parameter with key = %s does not exist in dictionary" % key
-        print "Using the default value of %s" % default
+        print("Warning: Parameter with key = %s does not exist in dictionary" % key)
+        print("Using the default value of %s" % default)
 
     # Convert string to desired data type
     if typ=="s":
@@ -45,7 +45,7 @@ def runMD(params):
 # rd - results directory, where all final results (energy, NAC, H', etc.) will be written by default it will be set to wd
 # This MD uses corrected NAC method
 
-    print "Starting runMD"
+    print("Starting runMD")
 
     # Now try to get parameters from the input
     BATCH_SYSTEM = get_value(params,"BATCH_SYSTEM","srun","s")  # either "srun" (for SLURM) or "mpirun" (for PBS)
@@ -74,16 +74,16 @@ def runMD(params):
 
     # Sanity/Convention check
     if(minband<=0): 
-        print "Error: minband should be >0, current value of minband = ",minband
+        print("Error: minband should be >0, current value of minband = ",minband)
         sys.exit(0)
     if(minband>maxband):
-        print "Error: minband must be smaller or equal to maxband. Current values: minband = ",minband," maxband = ",maxband
+        print("Error: minband must be smaller or equal to maxband. Current values: minband = ",minband," maxband = ",maxband)
         sys.exit(0)
     if(nocc>maxband):
-        print "Error: nocc must be smaller or equal to maxband. Current values: nocc = ",nocc," maxband = ",maxband
+        print("Error: nocc must be smaller or equal to maxband. Current values: nocc = ",nocc," maxband = ",maxband)
         sys.exit(0)
     if(nocc<minband):
-        print "Error: nocc must be larger or equal to minband. Current values: nocc = ",nocc," minband = ",minband
+        print("Error: nocc must be larger or equal to minband. Current values: nocc = ",nocc," minband = ",minband)
         sys.exit(0)
 
     # Convert minband, maxband and nocc from external (QE-consistent, starting from 1) convetion
@@ -98,15 +98,15 @@ def runMD(params):
     curr_index = start_indx - 1
     t = start_indx
 
-    print "In runMD: current working directory for python: ",os.getcwd()
-    print "In runMD: current working directory for sh:",os.system("echo pwd")
+    print("In runMD: current working directory for python: ",os.getcwd())
+    print("In runMD: current working directory for sh:",os.system("echo pwd"))
 
     os.system("mkdir %s" % wd)  # Create the working directory where all output files will be written
                                 # results directory should already exist
 
     while t<=stop_indx:
-        print "t= ", t
-        print "initializing variables"
+        print("t= ", t)
+        print("initializing variables")
         # Initialize variables
         # Wavefunctions for the neutral system
         curr_wfc0 = wfc()
@@ -124,7 +124,7 @@ def runMD(params):
  
 
         if t==start_indx:
-            print "Starting first point in this batch"
+            print("Starting first point in this batch")
             # Run calculations
             os.system( "%s -n %s %s < %s.%d.in > %s.%d.out" % (BATCH_SYSTEM,NP,EXE,prefix0,t,prefix0,t) )
             os.system( "%s -n %s %s < x0.exp.in > x0.exp.out" % (BATCH_SYSTEM,NP,EXE_EXPORT) )
@@ -149,7 +149,7 @@ def runMD(params):
             #sys.exit(0)
 
         elif t>start_indx:
-            print "Continuing with other points in this batch"
+            print("Continuing with other points in this batch")
             # Run calculations
             os.system( "%s -n %s %s < %s.%d.in > %s.%d.out" % (BATCH_SYSTEM,NP,EXE,prefix0,t,prefix0,t) )
             os.system( "%s -n %s %s < x0.exp.in > x0.exp.out" % (BATCH_SYSTEM,NP,EXE_EXPORT) )
@@ -177,7 +177,7 @@ def runMD(params):
 
         # Now general part - from current and next wavefunctions calculate NACs:
         if curr_index>=start_indx:
-            print "Generate NAC from WFCs at two adjacent points"
+            print("Generate NAC from WFCs at two adjacent points")
             # Read the N-electron wavefunction descriptions
             if nac_method>=0:
                 # Convert binary files to xml - this is needed in newest version of QE
@@ -197,7 +197,7 @@ def runMD(params):
 
                 curr_wfc0 = wfc(curr_tmp0,minband,nocc,curr_tmp0,nocc+1,maxband)
                 next_wfc0 = wfc(next_tmp0,minband,nocc,next_tmp0,nocc+1,maxband)
-                print "nac_method>=0: 2 WFCs are read and trimmed"
+                print("nac_method>=0: 2 WFCs are read and trimmed")
 
 
 
@@ -225,7 +225,7 @@ def runMD(params):
                 # this is because in charged system this is a HOMO, while we need LUMO
                 curr_wfc1 = wfc(curr_tmp0,minband,nocc,curr_tmp1,nocc+2,maxband)
                 next_wfc1 = wfc(next_tmp0,minband,nocc,next_tmp1,nocc+2,maxband)
-                print "nac_method>=1: 2 WFCs are read and trimmed"
+                print("nac_method>=1: 2 WFCs are read and trimmed")
 
 
 
@@ -247,14 +247,14 @@ def runMD(params):
                     curr_wfc0.restore(0,do_complete) # first 0 - k-point, second 1 - do complete wfc
                     next_wfc0.restore(0,do_complete)
 
-                print "nac_method>=0: WFCs are preconditioned"
+                print("nac_method>=0: WFCs are preconditioned")
 
                 # Finally compute Hamiltonian and the overlap matrix
                 # In this case - any reasonable value for nocc leads to the same results
                 # Keep in mind, the curr_wfc0 - is already only a subset of the whole wfc that has been 
                 # computed, so all bands - from 0 to maxband - minband will be active!
                 ham(curr_wfc0,next_wfc0,0,0, 0,maxband-minband, dt,"%s/0_Ham_%d" % (rd, curr_index) )
-                print "nac_method>=0: Hamiltonian is computed and printed"
+                print("nac_method>=0: Hamiltonian is computed and printed")
  
                 if compute_Hprime==1:
                     os.system("%s convert %s/curr0/x0.export/grid.1 %s/curr0/x0.export/grid.1.xml" % (EXE_CONVERT,wd,wd))
@@ -280,7 +280,7 @@ def runMD(params):
                     curr_wfc1.restore(0,do_complete) # first 0 - k-point, second 1 - do complete wfc
                     next_wfc1.restore(0,do_complete)
 
-                print "nac_method>=1: WFCs are preconditioned"
+                print("nac_method>=1: WFCs are preconditioned")
 
 
                 # Finally compute Hamiltonian and the overlap matrix
@@ -289,7 +289,7 @@ def runMD(params):
                 # here we use maxband-1 because 1 orbitals is skipped
 
                 ham(curr_wfc1,next_wfc1,0,0, 0,maxband-1-minband, dt,"%s/1_Ham_%d" % (rd, curr_index) )
-                print "nac_method>=1: Hamiltonian is computed and printed"
+                print("nac_method>=1: Hamiltonian is computed and printed")
 
 
                 if compute_Hprime==1:
@@ -309,7 +309,7 @@ def runMD(params):
                 os.system("rm -rf %s/curr1" % wd )
                 os.system("mv %s/next1 %s/curr1" % (wd, wd) )
 
-            print "old files deleted, new have become old"
+            print("old files deleted, new have become old")
 
 
 # ACHTUNG!!! Restoring wfc makes some complications, so we might need to destroy wfc objects
@@ -317,7 +317,7 @@ def runMD(params):
 
         curr_index = curr_index + 1
                
-        print "End of step t=", t
+        print("End of step t=", t)
         t = t + 1
 
 #================= End of runMD function =============================

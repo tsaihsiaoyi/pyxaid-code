@@ -45,7 +45,7 @@ params[\"do_complete\"]=1
 params[\"prefix0\"]=\"x0.scf\"
 params[\"prefix1\"]=\"x1.scf\"
 params[\"compute_Hprime\"]=1
-print params
+print(params)
 runMD.runMD(params)
 "
 

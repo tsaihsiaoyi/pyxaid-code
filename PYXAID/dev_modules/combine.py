@@ -165,7 +165,7 @@ def combine_all_QE(imin,imax,rt):
 
     i = imin
     while i < imax:
-        print i
+        print(i)
         combine_old_QE("%senergy%i" % (rt,i), "%snac%i_re" % (rt,i), "%snac%i_im" % (rt,i), "%s0_Ham_%i_re" % (rt,i), "%s0_Ham_%i_im" % (rt,i))
         i = i + 1
 
@@ -176,7 +176,7 @@ def combine_all_VASP(en_file, res_dir,imin):
 
     i = imin
     while i < imin + sz:
-        print i
+        print(i)
         combine_old_VASP("%senergy%i" % (res_dir,i), "%sreal%i" % (res_dir,i), "%s0_Ham_%i_re" % (res_dir,i), "%s0_Ham_%i_im" % (res_dir,i))
         i = i + 1
 

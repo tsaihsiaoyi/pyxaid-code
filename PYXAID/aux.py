@@ -104,11 +104,11 @@ def get_file(prefix,indx,T,X,shift,N):
 # T by X (this is what it returns), shift - gives the column offset to
 # start with
     filename = prefix+str(indx)
-    print filename
+    print(filename)
     Arr = []
     if os.path.exists(filename)==1:
 
-        print "adding file "+filename
+        print("adding file "+filename)
         f = open(filename,"r")
         B = f.readlines()
         f.close()
@@ -128,7 +128,7 @@ def get_file(prefix,indx,T,X,shift,N):
 
 def write_array(prefix,in_ex,T,X,Arr,denom):
 # Write Arr divided by denom
-    print "writing "+prefix+" file..."
+    print("writing "+prefix+" file...")
     f = open(prefix+str(in_ex),"w")
     t = 0
     line = ""

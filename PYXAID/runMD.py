@@ -25,8 +25,8 @@ def get_value(params,key,default,typ):
         pass  # All is ok
     else: 
         str_val = default
-        print "Warning: Parameter with key = %s does not exist in dictionary" % key
-        print "Using the default value of %s" % default
+        print("Warning: Parameter with key = %s does not exist in dictionary" % key)
+        print("Using the default value of %s" % default)
 
     # Convert string to desired data type
     if typ=="s":
@@ -70,16 +70,16 @@ def runMD(params):
 
     # Sanity/Convention check
     if(minband<=0): 
-        print "Error: minband should be >0, current value of minband = ",minband
+        print("Error: minband should be >0, current value of minband = ",minband)
         sys.exit(0)
     if(minband>maxband):
-        print "Error: minband must be smaller or equal to maxband. Current values: minband = ",minband," maxband = ",maxband
+        print("Error: minband must be smaller or equal to maxband. Current values: minband = ",minband," maxband = ",maxband)
         sys.exit(0)
     if(nocc>maxband):
-        print "Error: nocc must be smaller or equal to maxband. Current values: nocc = ",nocc," maxband = ",maxband
+        print("Error: nocc must be smaller or equal to maxband. Current values: nocc = ",nocc," maxband = ",maxband)
         sys.exit(0)
     if(nocc<minband):
-        print "Error: nocc must be larger or equal to minband. Current values: nocc = ",nocc," minband = ",minband
+        print("Error: nocc must be larger or equal to minband. Current values: nocc = ",nocc," minband = ",minband)
         sys.exit(0)
 
     # Convert minband, maxband and nocc from external (QE-consistent, starting from 1) convetion
@@ -94,8 +94,8 @@ def runMD(params):
     curr_index = start_indx - 1
     t = start_indx
 
-    print "In runMD: current working directory for python: ",os.getcwd()
-    print "In runMD: current working directory for sh:",os.system("echo pwd")
+    print("In runMD: current working directory for python: ",os.getcwd())
+    print("In runMD: current working directory for sh:",os.system("echo pwd"))
 
     os.system("mkdir %s" % wd)  # Create the working directory where all output files will be written
                                 # results directory should already exist
@@ -272,7 +272,7 @@ def runMD(params):
 
         curr_index = curr_index + 1
                
-        print t
+        print(t)
         t = t + 1
 
 #================= End of runMD function =============================

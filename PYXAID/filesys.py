@@ -34,6 +34,6 @@ def check(prefix,suffix,mini,maxi):
         i = i + 1
 
     for lst in res:
-        print "range("+str(lst[0])+","+str(lst[-1]+1)+")       nelts = "+str(lst[-1]+1-lst[0])
+        print("range("+str(lst[0])+","+str(lst[-1]+1)+")       nelts = "+str(lst[-1]+1-lst[0]))
 
 
