@@ -9,7 +9,7 @@
 
 import os
 import sys
-from pyxaid_core import *
+from .pyxaid_core import *
 
 
 def get_value(params,key,default,typ):
