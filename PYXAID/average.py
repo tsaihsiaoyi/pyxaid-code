@@ -42,7 +42,7 @@
 #
 ####################################################################################
 
-from aux import *
+from .aux import *
 
 
 def average(namdtime,num_states,iconds,opt,MS,inp_dir,res_dir):

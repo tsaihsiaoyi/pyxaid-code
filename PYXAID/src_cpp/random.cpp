@@ -37,7 +37,7 @@ void bin(vector<double>& in,double minx,double maxx,double dx,vector< pair<doubl
       out[n].second += 1.0;
     }
   }
-  for(int i=0;i<out.size();i++){
+  for(i=0;i<out.size();i++){
     out[i].second /= (sz*dx);
   }
 }

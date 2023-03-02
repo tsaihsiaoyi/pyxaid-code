@@ -192,7 +192,7 @@ int namd(boost::python::dict inp_params){
 //>>>>>>>>>>>>>>>>>>>>>>>>> MAIN PROGRAM PART <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   cout<<"Starting the program...\n";
-  for(int icond=0;icond<iconds.size();icond++){  // first_icond may start from 0, not 1
+  for(icond=0;icond<iconds.size();icond++){  // first_icond may start from 0, not 1
 
     if(params.debug_flag==2){
       cout<<"Initial condition index = "<<icond<<"     initial_time["<<icond<<"]="<<iconds[icond][0]
@@ -411,7 +411,7 @@ int namd(boost::python::dict inp_params){
     //======================== Compute multi-electron Hamiltonians ==========================
     //-------------------- Couplings -----------------------------------------
     // Now we consider all multi-electron states
-    for(int j=iconds[icond][0];j<iconds[icond][0]+params.namdtime;j++){
+    for(j=iconds[icond][0];j<iconds[icond][0]+params.namdtime;j++){
       int t = (j - iconds[icond][0]);  // Time
       int I,J;
 
@@ -421,11 +421,11 @@ int namd(boost::python::dict inp_params){
       *me_es[t].Hprimez = 0.0;
 
       // Initialize Energies, NACs and Hprime
-      for(int i=0;I<me_es[t].num_states;I++){
+      for(I=0;I<me_es[t].num_states;I++){
         // This initialization already includes shift of 1-e orbitals and 2-particle corrections
         me_es[t].Hcurr->M[I*me_es[t].num_states+I] = me_states[I].Exc + me_states[I].Eshift;
 
-        for(int j=0;J<me_es[t].num_states;J++){
+        for(J=0;J<me_es[t].num_states;J++){
           // off-diagonal elements - NAC
           if(I!=J){ me_es[t].Hcurr->M[I*me_es[t].num_states+J] = 0.0;    }
 
@@ -440,9 +440,9 @@ int namd(boost::python::dict inp_params){
 
 
       // Compute many-electron properties from those of the 1-electron
-      for(int i=0;I<me_es[t].num_states;I++){          // Numerate the me state on which we project.
+      for(I=0;I<me_es[t].num_states;I++){          // Numerate the me state on which we project.
                                                    // This multi-electron state J is defined by me_states[J]
-        for(int j=0;J<me_es[t].num_states;J++){
+        for(J=0;J<me_es[t].num_states;J++){
 
           // Practically there will be only one non-zero contribution, corresponding to
           // the pair of different indexes, for which all other indexes are identical
@@ -514,9 +514,9 @@ int namd(boost::python::dict inp_params){
 
     }// for I
 
-    for(int i=0;I<me_es[t].num_states;I++){          // Numerate the me state on which we project.
+    for(I=0;I<me_es[t].num_states;I++){          // Numerate the me state on which we project.
                                                  // This multi-electron state J is defined by me_states[J]
-      for(int j=0;J<me_es[t].num_states;J++){
+      for(J=0;J<me_es[t].num_states;J++){
 
           if(t==0 &&  params.debug_flag==1){
             // Only for the first time step output info - to check what is the NAC structure of the system
@@ -544,7 +544,7 @@ int namd(boost::python::dict inp_params){
     string outfile = (params.scratch_dir + "/me_energies"+int2string(icond));
     cout<<"The energies of basis  states (with respect to defined ground state) for the this initial condition are written in file "<<outfile<<"\n";
     ofstream out; out.open(outfile.c_str(),ios::out);
-    for(int j=iconds[icond][0];j<iconds[icond][0]+params.namdtime;j++){
+    for(j=iconds[icond][0];j<iconds[icond][0]+params.namdtime;j++){
       int t = (j - iconds[icond][0]);  // Time
       out<<"t= "<<j<<"  "<<"E[0]= "<<me_es[t].Hcurr->M[0].real()<<"  ";
       for(int I=0;I<me_es[t].num_states;I++){

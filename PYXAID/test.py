@@ -1,5 +1,5 @@
 from .pyxaid_core import *
-from pdos import *
+from .pdos import *
 
 x = info()
 

@@ -114,7 +114,7 @@ void wfc::QE_read_acsii_wfc(std::string filename){
   }
 
   // Now finally get the coefficients 
-  for(int k=0;k<nkpts;k++){
+  for(k=0;k<nkpts;k++){
     for(int band=0;band<nbands;band++){
       for(int pw=0;pw<npw;pw++){
 
