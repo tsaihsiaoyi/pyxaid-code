@@ -5,7 +5,7 @@
  * Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  * http://www.gnu.org/copyleft/gpl.txt
-***********************************************************/
+ ***********************************************************/
 
 #ifndef RANDOM_H
 #define RANDOM_H
@@ -19,9 +19,8 @@
 
 using namespace std;
 
-
 // Uniform distribution
-double uniform(double a,double b);
+double uniform(double a, double b);
 
 // Exponential distribution
 double exponential(double lambda);
@@ -33,13 +32,12 @@ double normal();
 double gamma(double a);
 
 // Beta distribution
-double beta(double a,double b);
+double beta(double a, double b);
 
 // Poisson distribution
-int poiss(double lambda,double t);
-void poiss(double lambda,double maxT,double dt,vector< pair<double,int> >& out);
+int poiss(double lambda, double t);
+void poiss(double lambda, double maxT, double dt, vector<pair<double, int> > &out);
 int poiss1(double lambda);
 int poiss2(double lambda);
-
 
 #endif // RANDOM_H

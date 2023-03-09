@@ -5,7 +5,7 @@
  * Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  * http://www.gnu.org/copyleft/gpl.txt
-***********************************************************/
+ ***********************************************************/
 
 #ifndef namd_export_h
 #define namd_export_h

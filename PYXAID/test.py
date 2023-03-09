@@ -6,6 +6,3 @@ x = info()
 x.version()
 x.developers()
 x.documentation()
-
-
-

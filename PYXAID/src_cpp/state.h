@@ -5,7 +5,7 @@
  * Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  * http://www.gnu.org/copyleft/gpl.txt
-***********************************************************/
+ ***********************************************************/
 
 #ifndef state_h
 #define state_h
@@ -21,19 +21,19 @@
 using namespace boost::python;
 using namespace std;
 
-int ext2int(int,vector<int>&);
-int delta(vector<int>& A,vector<int>& B,int& a,int& b);
+int ext2int(int, vector<int> &);
+int delta(vector<int> &A, vector<int> &B, int &a, int &b);
 
-  
-class me_state{
-// Multi-electron state
-// Basically it is a Slater product
+class me_state
+{
+  // Multi-electron state
+  // Basically it is a Slater product
 
 public:
-  std::string name;          // label of the determinant
+  std::string name; // label of the determinant
   // Data
-  vector<int> active_space;  // All occupied and virtual orbitals involved in dynamics
-  vector<int> actual_state;  // This is an actual(current) state
+  vector<int> active_space; // All occupied and virtual orbitals involved in dynamics
+  vector<int> actual_state; // This is an actual(current) state
 
   double Eshift; // this correction goes to Exc and is read directly from input - this is
                  // to simplify parameter development
@@ -45,27 +45,36 @@ public:
   vector<int> nac_scl_indx;
   vector<double> nac_scl;
 
-
   // Constructors
-  me_state(){}
-  me_state(vector<int>& as_,vector<int>& cs_){ active_space = as_; actual_state = cs_; Exc = 0.0; }
+  me_state() {}
+  me_state(vector<int> &as_, vector<int> &cs_)
+  {
+    active_space = as_;
+    actual_state = cs_;
+    Exc = 0.0;
+  }
 
   // Basically the constructor
-  void set_me_state(vector<int>& as_,vector<int>& cs_){ active_space = as_; actual_state = cs_; Exc = 0.0;}
-  
+  void set_me_state(vector<int> &as_, vector<int> &cs_)
+  {
+    active_space = as_;
+    actual_state = cs_;
+    Exc = 0.0;
+  }
+
   // Destructor
-  ~me_state() { ; ;}
+  ~me_state()
+  {
+    ;
+    ;
+  }
 
   // Functions
-  int calculate_Exc(vector<int>&, vector<int>&, vector<double>&,vector<int>&, vector<double>&);
+  int calculate_Exc(vector<int> &, vector<int> &, vector<double> &, vector<int> &, vector<double> &);
   void show_state();
-
 };
 
-
-void input_iconds(boost::python::dict params,int me_numstates,vector<vector<int> >& icond);
-void input_states(boost::python::dict params,vector<me_state>& states);
-
-
+void input_iconds(boost::python::dict params, int me_numstates, vector<vector<int> > &icond);
+void input_states(boost::python::dict params, vector<me_state> &states);
 
 #endif // state_h

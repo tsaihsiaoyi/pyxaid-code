@@ -5,7 +5,7 @@
  * Free Software Foundation; either version 3 of the
  * License, or (at your option) any later version.
  * http://www.gnu.org/copyleft/gpl.txt
-***********************************************************/
+ ***********************************************************/
 
 #ifndef IO_H
 #define IO_H
@@ -19,13 +19,12 @@
 
 using namespace std;
 
-int read_file(std::string filename,int verbose,vector<std::string>& A);
+int read_file(std::string filename, int verbose, vector<std::string> &A);
 
-void file2matrix(std::string filename,vector< vector<double> >& m);
-void file2matrix(std::string filename,vector< vector<double> >& m,double scl);
-void file2matrix(std::string filename,vector< vector<int> >& m);
+void file2matrix(std::string filename, vector<vector<double> > &m);
+void file2matrix(std::string filename, vector<vector<double> > &m, double scl);
+void file2matrix(std::string filename, vector<vector<int> > &m);
 
-void show_2D(vector< vector<double> >& in);
-
+void show_2D(vector<vector<double> > &in);
 
 #endif // IO_H
