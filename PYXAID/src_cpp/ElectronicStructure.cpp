@@ -66,7 +66,7 @@ void ElectronicStructure::project_out(int i)
     }
   }
   nrm = sqrt(nrm);
-  for (j = 0; j < num_states; j++)
+  for (int j = 0; j < num_states; j++)
   {
     Ccurr->M[j] /= nrm;
   }
@@ -135,7 +135,7 @@ void ElectronicStructure::check_decoherence(double dt, int boltz_flag, double Te
   }   // for i
 
   // Advancing time
-  for (i = 0; i < num_states; i++)
+  for (int i = 0; i < num_states; i++)
   {
     t_m[i] += dt;
   }
@@ -362,7 +362,7 @@ void ElectronicStructure::update_hop_prob_gfsh(double dt, int boltz_flag, double
   vector<double> a(num_states, 0.0);
   double norm = 0.0;
 
-  for (i = 0; i < num_states; i++)
+  for (int i = 0; i < num_states; i++)
   {
     a_dot[i] = A_dot->M[i * num_states + i].real();
     if (a_dot[i] < 0.0)
@@ -374,11 +374,11 @@ void ElectronicStructure::update_hop_prob_gfsh(double dt, int boltz_flag, double
   }
 
   // Now calculate the hopping probabilities
-  for (i = 0; i < num_states; i++)
+  for (int i = 0; i < num_states; i++)
   {
     double sumg = 0.0;
 
-    for (j = 0; j < num_states; j++)
+    for (int j = 0; j < num_states; j++)
     {
 
       if (j != i)
@@ -526,9 +526,9 @@ void ElectronicStructure::propagate_coefficients(double dt, matrix &Ef)
   complex<double> Hprime;
 
   // exp(iLij * dt/2)  ---->
-  for (i = 0; i < num_states; i++)
+  for (int i = 0; i < num_states; i++)
   {
-    for (j = i + 1; j < num_states; j++)
+    for (int j = i + 1; j < num_states; j++)
     {
       Hprime = Ef.M[0] * Hprimex->M[i * num_states + j] +
                Ef.M[1] * Hprimey->M[i * num_states + j] +
@@ -539,7 +539,7 @@ void ElectronicStructure::propagate_coefficients(double dt, matrix &Ef)
   }
 
   // exp(iL1 * dt)
-  for (i = 0; i < num_states; i++)
+  for (int i = 0; i < num_states; i++)
   {
     Hprime = Ef.M[0] * Hprimex->M[i * num_states + i] +
              Ef.M[1] * Hprimey->M[i * num_states + i] +
@@ -549,9 +549,9 @@ void ElectronicStructure::propagate_coefficients(double dt, matrix &Ef)
   }
 
   // exp(iLij * dt/2)  <----
-  for (i = num_states - 1; i >= 0; i--)
+  for (int i = num_states - 1; i >= 0; i--)
   {
-    for (j = num_states - 1; j > i; j--)
+    for (int j = num_states - 1; j > i; j--)
     {
       Hprime = Ef.M[0] * Hprimex->M[i * num_states + j] +
                Ef.M[1] * Hprimey->M[i * num_states + j] +
@@ -571,9 +571,9 @@ void ElectronicStructure::propagate_coefficients(double dt, matrix &Ef, matrix &
   //  update_decoherence_times(rates);
 
   // exp(iLij * dt/2)  ---->
-  for (i = 0; i < num_states; i++)
+  for (int i = 0; i < num_states; i++)
   {
-    for (j = i + 1; j < num_states; j++)
+    for (int j = i + 1; j < num_states; j++)
     {
       Hprime = Ef.M[0] * Hprimex->M[i * num_states + j] +
                Ef.M[1] * Hprimey->M[i * num_states + j] +
@@ -586,14 +586,14 @@ void ElectronicStructure::propagate_coefficients(double dt, matrix &Ef, matrix &
   update_populations();
 
   // exp(iL1 * dt)
-  for (i = 0; i < num_states; i++)
+  for (int i = 0; i < num_states; i++)
   {
     Hprime = Ef.M[0] * Hprimex->M[i * num_states + i] +
              Ef.M[1] * Hprimey->M[i * num_states + i] +
              Ef.M[2] * Hprimez->M[i * num_states + i];
 
     tau_m[i] = 0.0;
-    for (j = 0; j < num_states; j++)
+    for (int j = 0; j < num_states; j++)
     {
       tau_m[i] += A->M[j * num_states + j].real() * rates.M[i * num_states + j].real();
     } // for j
@@ -602,9 +602,9 @@ void ElectronicStructure::propagate_coefficients(double dt, matrix &Ef, matrix &
   }
 
   // exp(iLij * dt/2)  <----
-  for (i = num_states - 1; i >= 0; i--)
+  for (int i = num_states - 1; i >= 0; i--)
   {
-    for (j = num_states - 1; j > i; j--)
+    for (int j = num_states - 1; j > i; j--)
     {
       Hprime = Ef.M[0] * Hprimex->M[i * num_states + j] +
                Ef.M[1] * Hprimey->M[i * num_states + j] +

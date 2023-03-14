@@ -92,6 +92,7 @@ void file2matrix(std::string filename, vector<vector<double> > &M)
         M.push_back(line);
       }
     }
+
   }
   else
   {

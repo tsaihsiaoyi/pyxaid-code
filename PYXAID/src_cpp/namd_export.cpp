@@ -106,7 +106,7 @@ int namd(boost::python::dict inp_params)
       std::string Ham_re_file;
       Ham_re_file = params.Ham_re_prefix + int2string(j) + params.Ham_re_suffix;
 
-      if (params.debug_flag == 1)
+      if (params.debug_flag >= 1)
       {
         cout << "Reading Hamiltonian file(real part) = " << Ham_re_file << endl;
       }
@@ -120,7 +120,7 @@ int namd(boost::python::dict inp_params)
       std::string Ham_im_file;
       Ham_im_file = params.Ham_im_prefix + int2string(j) + params.Ham_im_suffix;
 
-      if (params.debug_flag == 1)
+      if (params.debug_flag >= 1)
       {
         cout << "Reading Hamiltonian file(imaginary part) = " << Ham_im_file << endl;
       }
@@ -175,7 +175,7 @@ int namd(boost::python::dict inp_params)
         std::string Hprime_z_file;
         Hprime_z_file = params.Hprime_z_prefix + int2string(j) + params.Hprime_z_suffix;
 
-        if (params.debug_flag == 1)
+        if (params.debug_flag >= 1)
         {
           cout << "Reading transition dipole file in momentum representation (x component) = "
                << Hprime_x_file << endl;
@@ -183,7 +183,7 @@ int namd(boost::python::dict inp_params)
         file2matrix(Hprime_x_file, Hprime_x);
         extract_2D(Hprime_x, Hprime_x_crop, me_states[0].active_space, -1);
 
-        if (params.debug_flag == 1)
+        if (params.debug_flag >= 1)
         {
           cout << "Reading transition dipole file in momentum representation (y component) = "
                << Hprime_y_file << endl;
@@ -191,7 +191,7 @@ int namd(boost::python::dict inp_params)
         file2matrix(Hprime_y_file, Hprime_y);
         extract_2D(Hprime_y, Hprime_y_crop, me_states[0].active_space, -1);
 
-        if (params.debug_flag == 1)
+        if (params.debug_flag >= 1)
         {
           cout << "Reading transition dipole file in momentum representation (z component) = "
                << Hprime_z_file << endl;
@@ -233,7 +233,7 @@ int namd(boost::python::dict inp_params)
   //>>>>>>>>>>>>>>>>>>>>>>>>> MAIN PROGRAM PART <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   cout << "Starting the program...\n";
-  for (icond = 0; icond < iconds.size(); icond++)
+  for (int icond = 0; icond < iconds.size(); icond++)
   { // first_icond may start from 0, not 1
 
     if (params.debug_flag == 2)
@@ -249,7 +249,7 @@ int namd(boost::python::dict inp_params)
 
     for (int j = iconds[icond][0]; j < iconds[icond][0] + params.namdtime; j++)
     { // namdtime also starts from 0
-      if (params.debug_flag == 1)
+      if (params.debug_flag >= 1)
       {
         cout << "----------- j = " << j << " -------------------" << endl;
       }
@@ -266,7 +266,7 @@ int namd(boost::python::dict inp_params)
         std::string Ham_re_file;
         Ham_re_file = params.Ham_re_prefix + int2string(j) + params.Ham_re_suffix;
 
-        if (params.debug_flag == 1)
+        if (params.debug_flag >= 1)
         {
           cout << "Reading Hamiltonian file(real part) = " << Ham_re_file << endl;
         }
@@ -278,7 +278,7 @@ int namd(boost::python::dict inp_params)
         std::string Ham_im_file;
         Ham_im_file = params.Ham_im_prefix + int2string(j) + params.Ham_im_suffix;
 
-        if (params.debug_flag == 1)
+        if (params.debug_flag >= 1)
         {
           cout << "Reading Hamiltonian file(imaginary part) = " << Ham_im_file << endl;
         }
@@ -333,21 +333,21 @@ int namd(boost::python::dict inp_params)
           std::string Hprime_z_file;
           Hprime_z_file = params.Hprime_z_prefix + int2string(j) + params.Hprime_z_suffix;
 
-          if (params.debug_flag == 1)
+          if (params.debug_flag >= 1)
           {
             cout << "Reading transition dipole file(x component) = " << Hprime_x_file << endl;
           }
           file2matrix(Hprime_x_file, Hprime_x);
           extract_2D(Hprime_x, Hprime_x_crop, me_states[0].active_space, -1);
 
-          if (params.debug_flag == 1)
+          if (params.debug_flag >= 1)
           {
             cout << "Reading transition dipole file(y component) = " << Hprime_y_file << endl;
           }
           file2matrix(Hprime_y_file, Hprime_y);
           extract_2D(Hprime_y, Hprime_y_crop, me_states[0].active_space, -1);
 
-          if (params.debug_flag == 1)
+          if (params.debug_flag >= 1)
           {
             cout << "Reading transition dipole file(z component) = " << Hprime_z_file << endl;
           }
@@ -416,7 +416,7 @@ int namd(boost::python::dict inp_params)
         delete Tz;
       }
 
-      if (t == 0 && params.debug_flag == 1)
+      if (t == 0 && params.debug_flag >= 1)
       {
 
         cout << "Hij_prime_x  = " << Hij_prime_x << endl;
@@ -497,7 +497,7 @@ int namd(boost::python::dict inp_params)
       //      cout<<"*(oe_es[t].Hcurr) = "<<*(oe_es[t].Hcurr)<<endl;
     } // namdtime loop - duration of run  - finishes at time init_time[icond]+namdtime
 
-    cout << "One-electron data are set\n";
+    cout << "One-electron data are set" << endl;
 
     //------------------ Not common data ---------------------------
     me_es[0].set_state(iconds[icond][1]); // Coefficients and populations
@@ -505,7 +505,7 @@ int namd(boost::python::dict inp_params)
     //======================== Compute multi-electron Hamiltonians ==========================
     //-------------------- Couplings -----------------------------------------
     // Now we consider all multi-electron states
-    for (j = iconds[icond][0]; j < iconds[icond][0] + params.namdtime; j++)
+    for (int j = iconds[icond][0]; j < iconds[icond][0] + params.namdtime; j++)
     {
       int t = (j - iconds[icond][0]); // Time
       int I, J;
@@ -516,12 +516,12 @@ int namd(boost::python::dict inp_params)
       *me_es[t].Hprimez = 0.0;
 
       // Initialize Energies, NACs and Hprime
-      for (I = 0; I < me_es[t].num_states; I++)
+      for (int I = 0; I < me_es[t].num_states; I++)
       {
         // This initialization already includes shift of 1-e orbitals and 2-particle corrections
         me_es[t].Hcurr->M[I * me_es[t].num_states + I] = me_states[I].Exc + me_states[I].Eshift;
 
-        for (J = 0; J < me_es[t].num_states; J++)
+        for (int J = 0; J < me_es[t].num_states; J++)
         {
           // off-diagonal elements - NAC
           if (I != J)
@@ -538,10 +538,10 @@ int namd(boost::python::dict inp_params)
       }   // for I
 
       // Compute many-electron properties from those of the 1-electron
-      for (I = 0; I < me_es[t].num_states; I++)
+      for (int I = 0; I < me_es[t].num_states; I++)
       { // Numerate the me state on which we project.
         // This multi-electron state J is defined by me_states[J]
-        for (J = 0; J < me_es[t].num_states; J++)
+        for (int J = 0; J < me_es[t].num_states; J++)
         {
 
           // Practically there will be only one non-zero contribution, corresponding to
@@ -554,7 +554,7 @@ int namd(boost::python::dict inp_params)
           if (delt)
           {
             // If we are here - then two configurations differ by not 1 occupied orbital
-            if (t == 0 && params.debug_flag == 1)
+            if (t == 0 && params.debug_flag >= 1)
             {
               cout << "orb_i, orb_j = " << orb_i << "  " << orb_j << endl;
             }
@@ -592,8 +592,7 @@ int namd(boost::python::dict inp_params)
         int sz_scl = me_states[I].nac_scl.size();
         for (int k = 0; k < sz_scl; k++)
         {
-          J = me_states[I].nac_scl_indx[k];
-          me_es[t].Hcurr->M[I * me_es[t].num_states + J] *= me_states[I].nac_scl[k];
+          me_es[t].Hcurr->M[I * me_es[t].num_states + me_states[I].nac_scl_indx[k] ] *= me_states[I].nac_scl[k];
         } // for k
 
         // Compute the energy and the perturbation of the macrostate
@@ -619,13 +618,13 @@ int namd(boost::python::dict inp_params)
 
       } // for I
 
-      for (I = 0; I < me_es[t].num_states; I++)
+      for (int I = 0; I < me_es[t].num_states; I++)
       { // Numerate the me state on which we project.
         // This multi-electron state J is defined by me_states[J]
-        for (J = 0; J < me_es[t].num_states; J++)
+        for (int J = 0; J < me_es[t].num_states; J++)
         {
 
-          if (t == 0 && params.debug_flag == 1)
+          if (t == 0 && params.debug_flag >= 1)
           {
             // Only for the first time step output info - to check what is the NAC structure of the system
             cout << "I, J, coupling(scaled), Hprimex, Hprimey, Hprimez = "
@@ -651,7 +650,7 @@ int namd(boost::python::dict inp_params)
     cout << "The energies of basis  states (with respect to defined ground state) for the this initial condition are written in file " << outfile << "\n";
     ofstream out;
     out.open(outfile.c_str(), ios::out);
-    for (j = iconds[icond][0]; j < iconds[icond][0] + params.namdtime; j++)
+    for (int j = iconds[icond][0]; j < iconds[icond][0] + params.namdtime; j++)
     {
       int t = (j - iconds[icond][0]); // Time
       out << "t= " << j << "  "

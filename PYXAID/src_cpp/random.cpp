@@ -53,7 +53,7 @@ void bin(vector<double> &in, double minx, double maxx, double dx, vector<pair<do
       out[n].second += 1.0;
     }
   }
-  for (i = 0; i < out.size(); i++)
+  for (int i = 0; i < out.size(); i++)
   {
     out[i].second /= (sz * dx);
   }

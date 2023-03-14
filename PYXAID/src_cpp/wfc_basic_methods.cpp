@@ -112,7 +112,7 @@ void MO::normalize()
     norm += (std::conj(coeff[i]) * coeff[i]).real();
   }
   norm = sqrt(1.0 / norm);
-  for (i = 0; i < npw; i++)
+  for (int i = 0; i < npw; i++)
   {
     coeff[i] *= norm;
   }
@@ -142,7 +142,7 @@ void MO::complete()
 
   // Finally, normalize the completed wfc
   norm = sqrt(1.0 / norm);
-  for (i = 0; i < npw; i++)
+  for (int i = 0; i < npw; i++)
   {
     coeff[i] *= norm;
   }
@@ -237,7 +237,7 @@ K_point::K_point(K_point &k1, int min1, int max1, K_point &k2, int min2, int max
   {
     mo.push_back(k1.mo[i]);
   }
-  for (i = min2; i <= max2; i++)
+  for (int i = min2; i <= max2; i++)
   {
     mo.push_back(k2.mo[i]);
   }
@@ -440,7 +440,7 @@ void wfc::restore(int k1, int do_complete)
   // evec.inverse(1e-12,evec_inv,1); // We don't need inverse - it is just .H()
   // cout<<"inverse = "<<evec_inv<<endl;
   eval_sqrt = 0.0;
-  for (i = 0; i < nbands; i++)
+  for (int i = 0; i < nbands; i++)
   {
     eval_sqrt.M[i * nbands + i] = 1.0 / sqrt(eval.M[i * nbands + i]);
   }

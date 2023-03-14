@@ -77,7 +77,7 @@ int delta(vector<int> &A, vector<int> &B, int &a, int &b)
   sz = _C.size();
 
   int nexc = 0; // Number of excitations between 2 states
-  for (i = 0; i < sz; i++)
+  for (int i = 0; i < sz; i++)
   {
     int n_in_a, n_in_b;
     vector<int> tmpa, tmpb;
@@ -135,7 +135,7 @@ int me_state::calculate_Exc(vector<int> &Exc_i, vector<int> &Exc_j, vector<doubl
 
   // Shift given (1-electron orbitals) - "Scissor" operator
   sz = shift_E.size();
-  for (i = 0; i < Nel; i++)
+  for (int i = 0; i < Nel; i++)
   {
     for (int n = 0; n < sz; n++)
     {
@@ -250,7 +250,7 @@ void input_states(boost::python::dict params, vector<me_state> &states)
   } // for i
 
   // Now read the microstates and create corresponding determinants
-  for (i = 0; i < len(lkeys); i++)
+  for (int i = 0; i < len(lkeys); i++)
   {
     std::string s1;
     s1 = extract<std::string>(lkeys[i]);
@@ -270,7 +270,7 @@ void input_states(boost::python::dict params, vector<me_state> &states)
   }     // for i
 
   // Read other orbital/determinant parameters
-  for (i = 0; i < len(lkeys); i++)
+  for (int i = 0; i < len(lkeys); i++)
   {
     std::string s1;
     s1 = extract<std::string>(lkeys[i]);
@@ -290,7 +290,7 @@ void input_states(boost::python::dict params, vector<me_state> &states)
     }
   } // for i
 
-  for (i = 0; i < len(lkeys); i++)
+  for (int i = 0; i < len(lkeys); i++)
   {
     std::string s1;
     s1 = extract<std::string>(lkeys[i]);
@@ -312,7 +312,7 @@ void input_states(boost::python::dict params, vector<me_state> &states)
     }
   } // for i
 
-  for (i = 0; i < len(lkeys); i++)
+  for (int i = 0; i < len(lkeys); i++)
   {
     std::string s1;
     s1 = extract<std::string>(lkeys[i]);
@@ -336,14 +336,14 @@ void input_states(boost::python::dict params, vector<me_state> &states)
 
   // Now calculate the Exc corrections for all states, based on extracted parameters Exc_i, Exc_j and Exc
   int sz = states.size();
-  for (i = 0; i < sz; i++)
+  for (int i = 0; i < sz; i++)
   {
     states[i].calculate_Exc(Exc_i, Exc_j, Exc, shift_i, shift_E);
   }
 
   // Debugging
   cout << "Number of basis multi-electron states is: " << sz << endl;
-  for (i = 0; i < sz; i++)
+  for (int i = 0; i < sz; i++)
   {
     cout << "State " << i << " : ";
     states[i].show_state();
@@ -352,7 +352,7 @@ void input_states(boost::python::dict params, vector<me_state> &states)
 
   // Now set NAC scalings
   int sz1 = nac_scl.size(); // total number of all pairs to be scales
-  for (i = 0; i < sz; i++)
+  for (int i = 0; i < sz; i++)
   { // For each state i
     for (int k = 0; k < sz1; k++)
     { // check all pairs j
@@ -387,7 +387,7 @@ void input_states(boost::python::dict params, vector<me_state> &states)
   }     // for i
 
   // Now print all corrections:
-  for (i = 0; i < sz; i++)
+  for (int i = 0; i < sz; i++)
   {
     cout << "Couplings of the macrostate " << i << " will be scaled for the following states:\n";
     for (int k = 0; k < states[i].nac_scl.size(); k++)
@@ -421,7 +421,7 @@ void input_iconds(boost::python::dict params, int me_numstates, vector<vector<in
     }   // iconds-micro
   }     // for i
 
-  for (i = 0; i < iconds.size(); i++)
+  for (int i = 0; i < iconds.size(); i++)
   {
     if (iconds[i][1] < 0)
     {

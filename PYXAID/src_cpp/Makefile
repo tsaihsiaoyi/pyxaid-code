@@ -1,5 +1,6 @@
-FLAGS= -fno-for-scope -O2 -fPIC
-CPP= c++
+# FLAGS= -fno-for-scope -O2 -fPIC
+FLAGS= -fPIC -std=c++11
+CPP= icpc
 # IDENTIFY YOUR INCLUDE PATH WHICH CONTAIN BOOST AND PYTHON
 p1=${CONDA_PREFIX}/include
 p2=${p1}/python*
@@ -64,5 +65,5 @@ pyxaid_core.so: pyxaid_core.o wfc_export.o wfc_functions.o wfc_QE_methods.o wfc_
 clean:
 	rm *.o
 	rm pyxaid_core.so
-	rm ../pyxaid_core.so
+	if [ -f ../pyxaid_core.so ]; then rm ../pyxaid_core.so; fi
 
