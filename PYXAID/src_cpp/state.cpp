@@ -159,27 +159,26 @@ void me_state::show_state()
   cout << endl;
 }
 
-int list2state(boost::python::list lst, vector<int> &active_space, me_state &ES)
+int list2state(json lst, vector<int> &active_space, me_state &ES)
 {
   //        string   int list   double(optinal)
   // lst = [  name,  [1,2,3],     Eshift   ]
   int res = 1;
-  int sz = len(lst);
+  int sz = lst.size();
   if (sz >= 2)
   {
     // Name - field 0
-    ES.name = extract<std::string>(lst[0]);
+    ES.name = lst[0].get<std::string>();
 
     // Actual state - field 1
-    boost::python::list lst1 = extract<boost::python::list>(lst[1]);
-    int sz1 = len(lst1);
+    vector<int> lst1 = lst[1].get<vector<int>>();
+    int sz1 = lst1.size();
     vector<int> state;
     for (int i = 0; i < sz1; i++)
     {
-      int val = extract<int>(lst1[i]);
-      if (is_in_vector(abs(val), active_space))
+      if (is_in_vector(abs(lst1[i]), active_space))
       {
-        state.push_back(val);
+        state.push_back(lst1[i]);
       }
       else
       {
@@ -195,7 +194,7 @@ int list2state(boost::python::list lst, vector<int> &active_space, me_state &ES)
     // Eshift - field 2 (optional)
     if (sz >= 3)
     {
-      ES.Eshift = extract<double>(lst[2]);
+      ES.Eshift = lst[2].get<double>();
     }
   }
   else
@@ -207,7 +206,7 @@ int list2state(boost::python::list lst, vector<int> &active_space, me_state &ES)
   return res;
 }
 
-void input_states(boost::python::dict params, vector<me_state> &states)
+void input_states(json params, vector<me_state> &states)
 {
   // States are defined as a list in a dictionary with a key "states"
   // For example:
@@ -227,113 +226,65 @@ void input_states(boost::python::dict params, vector<me_state> &states)
   vector<double> shift_E;           // energy by which shift corresponding (1-electron) orbitals
   vector<int> nac_scl_i, nac_scl_j; // indexes of the macrostates
   vector<double> nac_scl;           // scaling constant for given pair of the macrostates
-
-  boost::python::list lkeys = params.keys();
-
   // First - look only for active space
-  for (int i = 0; i < len(lkeys); i++)
+  if (!params["active_space"].is_null())
   {
-    std::string s1;
-    s1 = extract<std::string>(lkeys[i]);
-
-    if (s1 == "active_space")
-    {
-      boost::python::list lst;
-      lst = extract<boost::python::list>(params[s1]);
-      for (int j = 0; j < len(lst); j++)
-      {
-        int val = extract<int>(lst[j]);
-        active_space.push_back(val);
-      }
-      is_active_space = 1;
-    }
-  } // for i
+    active_space = params["active_space"].get<vector<int>>();
+    is_active_space = 1;
+  }
 
   // Now read the microstates and create corresponding determinants
-  for (int i = 0; i < len(lkeys); i++)
+  if (!params["states"].is_null() && is_active_space)
   {
-    std::string s1;
-    s1 = extract<std::string>(lkeys[i]);
-
-    if (s1 == "states" && is_active_space)
+    json micro = params["states"];
+    for (int j = 0; j < micro.size(); j++)
     {
-      boost::python::list micro = extract<boost::python::list>(params[s1]);
-      for (int j = 0; j < len(micro); j++)
+      json tmp = micro[j];
+      if (list2state(tmp, active_space, ES))
       {
-        boost::python::list tmp = extract<boost::python::list>(micro[j]);
-        if (list2state(tmp, active_space, ES))
-        {
-          states.push_back(ES);
-        }
-      } // for j
-    }   // microstates
-  }     // for i
+        states.push_back(ES);
+      }
+    }
+  }
 
   // Read other orbital/determinant parameters
-  for (int i = 0; i < len(lkeys); i++)
+  if (!params["shift"].is_null())
   {
-    std::string s1;
-    s1 = extract<std::string>(lkeys[i]);
-
-    if (s1 == "shift")
+    int sz = params["shift"].size();
+    shift_i = vector<int>(sz, 0);
+    shift_E = vector<double>(sz, 0.0);
+    for (int i = 0; i < sz; i++)
     {
-      boost::python::list shifts = extract<boost::python::list>(params[s1]);
-      int sz = len(shifts);
-      shift_i = vector<int>(sz, 0);
-      shift_E = vector<double>(sz, 0.0);
-      for (int j = 0; j < sz; j++)
-      {
-        boost::python::list tmp = extract<boost::python::list>(shifts[j]);
-        shift_i[j] = extract<int>(tmp[0]);
-        shift_E[j] = extract<double>(tmp[1]);
-      } // for j
+      shift_i[i] = params["shift"][i][0].get<int>();
+      shift_E[i] = params["shift"][i][1].get<double>();
     }
-  } // for i
-
-  for (int i = 0; i < len(lkeys); i++)
+  }
+  if (!params["Exc"].is_null())
   {
-    std::string s1;
-    s1 = extract<std::string>(lkeys[i]);
-
-    if (s1 == "Exc")
+    int sz = params["Exc"].size();
+    Exc_i = vector<int>(sz, 0);
+    Exc_j = vector<int>(sz, 0);
+    Exc = vector<double>(sz, 0.0);
+    for (int i = 0; i < sz; i++)
     {
-      boost::python::list exc = extract<boost::python::list>(params[s1]);
-      int sz = len(exc);
-      Exc_i = vector<int>(sz, 0);
-      Exc_j = vector<int>(sz, 0);
-      Exc = vector<double>(sz, 0.0);
-      for (int j = 0; j < sz; j++)
-      {
-        boost::python::list tmp = extract<boost::python::list>(exc[j]);
-        Exc_i[j] = extract<int>(tmp[0]);
-        Exc_j[j] = extract<int>(tmp[1]);
-        Exc[j] = extract<double>(tmp[2]);
-      } // for j
+      Exc_i[i] = params["Exc"][i][0].get<int>();
+      Exc_j[i] = params["Exc"][i][1].get<int>();
+      Exc[i] = params["Exc"][i][2].get<double>();
     }
-  } // for i
-
-  for (int i = 0; i < len(lkeys); i++)
+  }
+  if (!params["nac_scale"].is_null())
   {
-    std::string s1;
-    s1 = extract<std::string>(lkeys[i]);
-
-    if (s1 == "nac_scale")
+    int sz = params["nac_scale"].size();
+    nac_scl_i = vector<int>(sz, 0);
+    nac_scl_j = vector<int>(sz, 0);
+    nac_scl = vector<double>(sz, 0.0);
+    for (int i = 0; i < sz; i++)
     {
-      boost::python::list nac = extract<boost::python::list>(params[s1]);
-      int sz = len(nac);
-      nac_scl_i = vector<int>(sz, 0);
-      nac_scl_j = vector<int>(sz, 0);
-      nac_scl = vector<double>(sz, 0.0);
-      for (int j = 0; j < sz; j++)
-      {
-        boost::python::list tmp = extract<boost::python::list>(nac[j]);
-        nac_scl_i[j] = extract<int>(tmp[0]);
-        nac_scl_j[j] = extract<int>(tmp[1]);
-        nac_scl[j] = extract<double>(tmp[2]);
-      } // for j
+      nac_scl_i[i] = params["nac_scale"][i][0].get<int>();
+      nac_scl_j[i] = params["nac_scale"][i][1].get<int>();
+      nac_scl[i] = params["nac_scale"][i][2].get<double>();
     }
-  } // for i
-
+  }
   // Now calculate the Exc corrections for all states, based on extracted parameters Exc_i, Exc_j and Exc
   int sz = states.size();
   for (int i = 0; i < sz; i++)
@@ -397,29 +348,11 @@ void input_states(boost::python::dict params, vector<me_state> &states)
   } // for i
 }
 
-void input_iconds(boost::python::dict params, int me_numstates, vector<vector<int> > &iconds)
+void input_iconds(json params, int me_numstates, vector<vector<int>> &iconds)
 {
   // initial condition are defined as a list in a dictionary with a key "iconds"
-  std::string val;
-  boost::python::list lkeys = params.keys();
 
-  for (int i = 0; i < len(lkeys); i++)
-  {
-    std::string keyi = extract<std::string>(lkeys[i]);
-    if (keyi == "iconds")
-    {
-      boost::python::list lst = extract<boost::python::list>(params[keyi]);
-      int sz = len(lst);
-      iconds = vector<vector<int> >(sz, vector<int>(2, 0));
-
-      for (int j = 0; j < sz; j++)
-      {
-        boost::python::list lstj = extract<boost::python::list>(lst[j]);
-        iconds[j][0] = extract<int>(lstj[0]);
-        iconds[j][1] = extract<int>(lstj[1]);
-      } // for j
-    }   // iconds-micro
-  }     // for i
+  iconds = params["iconds"].get<vector<vector<int>>>();
 
   for (int i = 0; i < iconds.size(); i++)
   {

@@ -13,6 +13,18 @@
 #include "aux.h"
 #include "InputStructure.h"
 #include "ElectronicStructure.h"
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string.h>
+#include <sstream>
+#include <time.h>
+#include <stdlib.h>
+#include <time.h>
+#include "json.hpp"
+
+using json = nlohmann::json;
+using namespace std;
 
 void hop(vector<double> &sh_prob, int &state, int num_states);
 void solve_electronic(InputStructure &is, vector<ElectronicStructure> &es, matrix &);
@@ -20,5 +32,6 @@ void solve_electronic(InputStructure &is, vector<ElectronicStructure> &es, matri
 void run_decoherence_rates(InputStructure &is, vector<ElectronicStructure> &me_es, vector<me_state> &me_states, int icond);
 void run_namd(InputStructure &is, vector<ElectronicStructure> &me_es, vector<me_state> &me_states, int icond);
 void run_namd1(InputStructure &is, vector<ElectronicStructure> &me_es, vector<me_state> &me_states, int icond);
+int namd();
 
 #endif // NAMD_H

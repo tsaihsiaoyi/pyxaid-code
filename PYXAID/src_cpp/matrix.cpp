@@ -1805,7 +1805,7 @@ void matrix::direct_inverse(double EPS, matrix &INV)
     {
       L_time[row1 * num_of_cols + col] = L_time[row1 * num_of_cols + col] / alpha;
     } // for col
-    for (int row2 = row1 - 1; row2 >= 0; row2--)  
+    for (int row2 = row1 - 1; row2 >= 0; row2--)
     {
       alpha = -R_time[row2 * num_of_cols + row1];
       for (int col = (num_of_cols - 1); col >= 0; col--)

@@ -7,14 +7,9 @@
  * http://www.gnu.org/copyleft/gpl.txt
  ***********************************************************/
 
-#include <boost/python.hpp>
 #include <iostream>
-#include <iomanip>
-#include "wfc_export.h"
-#include "namd_export.h"
-#include "matrix.h"
+#include "namd.h"
 using namespace std;
-using namespace boost::python;
 
 class info
 {
@@ -52,14 +47,28 @@ public:
   }
 };
 
-BOOST_PYTHON_MODULE(pyxaid_core)
+// BOOST_PYTHON_MODULE(pyxaid_core)
+// {
+
+//   class_<info>("info", init<>())
+//       .def("version", &info::version)
+//       .def("developers", &info::developers)
+//       .def("documentation", &info::documentation);
+
+//   export_namd();
+// }
+
+int main()
 {
-
-  class_<info>("info", init<>())
-      .def("version", &info::version)
-      .def("developers", &info::developers)
-      .def("documentation", &info::documentation);
-
-  export_wfc();
-  export_namd();
+  cout << "============================================================\n";
+  cout << "PYXAID: PYthon eXtension for Ab Inition Dynamics version 1.0\n";
+  cout << "/***********************************************************\n";
+  cout << " * This program is free software distributed under the terms of the\n";
+  cout << " * GNU General Public License as published by the\n";
+  cout << " * Free Software Foundation; either version 3 of the\n";
+  cout << " * License, or (at your option) any later version.\n";
+  cout << " * http://www.gnu.org/copyleft/gpl.txt\n";
+  cout << "***********************************************************/\n";
+  namd();
+  return 0;
 }

@@ -11,8 +11,8 @@
 #define InputStructure_H
 
 #include <string>
-#include <boost/python.hpp>
-using namespace boost::python;
+#include "json.hpp"
+using json = nlohmann::json;
 using namespace std;
 
 class InputStructure
@@ -115,7 +115,7 @@ public:
   int is_field_fluence; // fluence of the field in mJ/cm^2
 
   // Constructor
-  InputStructure(boost::python::dict);
+  InputStructure(json);
 };
 
 #endif // InputStructure_H

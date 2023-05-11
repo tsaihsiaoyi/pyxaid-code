@@ -37,7 +37,7 @@ std::string int2string(int);
 
 // Operations on arrays - reformings, etc.
 void extract_1D(vector<double> &in, vector<double> &out, vector<int> &templ, int shift);
-void extract_2D(vector<vector<double> > &in, vector<vector<double> > &out, int minx, int maxx, int miny, int maxy);
-void extract_2D(vector<vector<double> > &in, vector<vector<double> > &out, vector<int> &templ, int shift);
+void extract_2D(vector<vector<double>> &in, vector<vector<double>> &out, int minx, int maxx, int miny, int maxy);
+void extract_2D(vector<vector<double>> &in, vector<vector<double>> &out, vector<int> &templ, int shift);
 
 #endif // AUX_H

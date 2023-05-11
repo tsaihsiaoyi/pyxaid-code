@@ -22,22 +22,4 @@ using namespace std;
 // Uniform distribution
 double uniform(double a, double b);
 
-// Exponential distribution
-double exponential(double lambda);
-
-// Normal (Gaussian) distribution
-double normal();
-
-// Gamma distribution
-double gamma(double a);
-
-// Beta distribution
-double beta(double a, double b);
-
-// Poisson distribution
-int poiss(double lambda, double t);
-void poiss(double lambda, double maxT, double dt, vector<pair<double, int> > &out);
-int poiss1(double lambda);
-int poiss2(double lambda);
-
 #endif // RANDOM_H

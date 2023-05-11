@@ -64,7 +64,7 @@ int read_file(std::string filename, int verbose, vector<std::string> &A)
   return A.size();
 }
 
-void file2matrix(std::string filename, vector<vector<double> > &M)
+void file2matrix(std::string filename, vector<vector<double>> &M)
 {
   /*****************************************************************
     This function reads the content of the tabular (2D) file into matrix M
@@ -92,7 +92,6 @@ void file2matrix(std::string filename, vector<vector<double> > &M)
         M.push_back(line);
       }
     }
-
   }
   else
   {
@@ -102,7 +101,7 @@ void file2matrix(std::string filename, vector<vector<double> > &M)
   in.close();
 }
 
-void file2matrix(std::string filename, vector<vector<double> > &M, double scl)
+void file2matrix(std::string filename, vector<vector<double>> &M, double scl)
 {
   /*****************************************************************
     This function reads the contend of the tabular (2D) file into matrix M and scales
@@ -140,7 +139,7 @@ void file2matrix(std::string filename, vector<vector<double> > &M, double scl)
   in.close();
 }
 
-void file2matrix(std::string filename, vector<vector<int> > &M)
+void file2matrix(std::string filename, vector<vector<int>> &M)
 {
   /*****************************************************************
     This function reads the content of the tabular (2D) file into matrix M
@@ -178,7 +177,7 @@ void file2matrix(std::string filename, vector<vector<int> > &M)
   in.close();
 }
 
-void show_2D(vector<vector<double> > &in)
+void show_2D(vector<vector<double>> &in)
 {
   /******************************************************************
     This function prints out the matrix in a tabular form

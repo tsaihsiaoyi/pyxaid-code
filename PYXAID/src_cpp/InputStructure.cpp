@@ -11,15 +11,13 @@
 #include "InputStructure.h"
 #include "units.h"
 
-using namespace std;
-
 //================= Class InputStructure ==========================
 
-void InputStructure::error(std::string var)
+void InputStructure::error(string var)
 {
   cout << "Error: variable " << var << " is not defined\n";
 }
-void InputStructure::warning(std::string var, std::string default_value)
+void InputStructure::warning(string var, string default_value)
 {
   cout << "Warning: variable " << var << " is not defined. Parameter is set to default value = " << default_value << "\n";
 }
@@ -27,24 +25,41 @@ void InputStructure::warning(std::string var, std::string default_value)
 void InputStructure::init()
 {
   // Variables are not defined
-  is_read_couplings =
-      //  is_many_electron_algorithm =
-      is_namdtime = is_sh_algo = is_num_sh_traj =
-          is_boltz_flag = is_debug_flag = is_Temp =
-              is_nucl_dt = is_elec_dt = is_integrator =
-                  is_runtype =
-                      is_Ham_re_prefix = is_Ham_re_suffix =
-                          is_Ham_im_prefix = is_Ham_im_suffix =
-                              is_Hprime_x_prefix = is_Hprime_z_prefix = is_Hprime_z_prefix =
-                                  is_Hprime_x_suffix = is_Hprime_z_suffix = is_Hprime_z_suffix =
-                                      //  is_energy_prefix =
-                                      //  is_energy_suffix = is_nac_re_prefix = is_nac_re_suffix =
-                                      //  is_nac_im_prefix = is_nac_im_suffix =
-      is_energy_in_one_file =
-          is_scratch_dir = is_energy_units = is_alp_bet = is_decoherence =
-              is_regress_mode =
-                  is_is_field = is_field_dir = is_field_protocol = is_field_Tm =
-                      is_field_T = is_field_freq = is_field_freq_units = is_field_fluence = 0;
+  is_read_couplings = 0;
+  is_namdtime = 0;
+  is_sh_algo = 0;
+  is_num_sh_traj = 0;
+  is_boltz_flag = 0;
+  is_debug_flag = 0;
+  is_Temp = 0;
+  is_nucl_dt = 0;
+  is_elec_dt = 0;
+  is_integrator = 0;
+  is_runtype = 0;
+  is_Ham_re_prefix = 0;
+  is_Ham_re_suffix = 0;
+  is_Ham_im_prefix = 0;
+  is_Ham_im_suffix = 0;
+  is_Hprime_x_prefix = 0;
+  is_Hprime_z_prefix = 0;
+  is_Hprime_z_prefix = 0;
+  is_Hprime_x_suffix = 0;
+  is_Hprime_z_suffix = 0;
+  is_Hprime_z_suffix = 0;
+  is_energy_in_one_file = 0;
+  is_scratch_dir = 0;
+  is_energy_units = 0;
+  is_alp_bet = 0;
+  is_decoherence = 0;
+  is_regress_mode = 0;
+  is_is_field = 0;
+  is_field_dir = 0;
+  is_field_protocol = 0;
+  is_field_Tm = 0;
+  is_field_T = 0;
+  is_field_freq = 0;
+  is_field_freq_units = 0;
+  is_field_fluence = 0;
 }
 
 void InputStructure::echo()
@@ -92,19 +107,10 @@ void InputStructure::echo()
   {
     cout << "Hprime_z_suffix = " << Hprime_z_suffix << endl;
   }
-
-  //  if(is_energy_prefix){ cout<<"energy_prefix = "<<energy_prefix<<endl; }
-  //  if(is_energy_suffix){ cout<<"energy_suffix = "<<energy_suffix<<endl; }
   if (is_energy_units)
   {
     cout << "energy_units = " << energy_units << endl;
   }
-  //  if(is_nac_re_prefix){ cout<<"nac_re_prefix = "<<nac_re_prefix<<endl; }
-  //  if(is_nac_re_suffix){ cout<<"nac_re_suffix = "<<nac_re_suffix<<endl; }
-  //  if(is_nac_im_prefix){ cout<<"nac_im_prefix = "<<nac_im_prefix<<endl; }
-  //  if(is_nac_im_suffix){ cout<<"nac_im_suffix = "<<nac_im_suffix<<endl; }
-  //  if(is_overlap_re_prefix){ cout<<"overlap_re_prefix = "<<overlap_re_prefix<<endl; }
-  //  if(is_overlap_re_suffix){ cout<<"overlap_re_suffix = "<<overlap_re_suffix<<endl; }
   if (is_energy_in_one_file)
   {
     cout << "energy_in_one_file = " << energy_in_one_file << endl;
@@ -121,7 +127,6 @@ void InputStructure::echo()
   {
     cout << "read_overlaps = " << read_overlaps << endl;
   }
-  //  if(is_many_electron_algorithm){ cout<<"many_electron_algorithm = "<<many_electron_algorithm<<endl; }
   if (is_namdtime)
   {
     cout << "namdtime = " << namdtime << endl;
@@ -276,21 +281,12 @@ void InputStructure::set_default()
     Hprime_z_suffix = "_re";
     is_Hprime_z_suffix = 1;
   }
-
-  //  if(!is_energy_prefix){ warning("energy_prefix","energy"); energy_prefix="energy"; is_energy_prefix = 1; }
-  //  if(!is_energy_suffix){ warning("energy_suffix","");       energy_suffix = "";     is_energy_suffix = 1; }
   if (!is_energy_units)
   {
     warning("energy_units", "Ry");
     energy_units = "Ry";
     is_energy_units = 1;
   }
-  //  if(!is_nac_re_prefix){ warning("nac_re_prefix","nac");    nac_re_prefix = "nac";  is_nac_re_prefix = 1; }
-  //  if(!is_nac_re_suffix){ warning("nac_re_suffix","_re");    nac_re_suffix = "_re";  is_nac_re_suffix = 1; }
-  //  if(!is_nac_im_prefix){ warning("nac_im_prefix","nac");    nac_im_prefix = "nac";  is_nac_im_prefix = 1; }
-  //  if(!is_nac_im_suffix){ warning("nac_im_suffix","_im");    nac_im_suffix = "_im";  is_nac_im_suffix = 1; }
-  //  if(!is_overlap_re_prefix){ warning("overlap_re_prefix","overlap");overlap_re_prefix = "overlap";is_overlap_re_prefix = 1;}
-  //  if(!is_overlap_re_suffix){ warning("overlap_re_suffix","_re"); overlap_re_suffix = "_re";  is_overlap_re_suffix = 1; }
   if (!is_energy_in_one_file)
   {
     warning("energy_in_one_file", "false");
@@ -318,7 +314,6 @@ void InputStructure::set_default()
     is_read_overlaps = 1;
     wrn_status++;
   }
-  // if(!is_many_electron_algorithm){ warning("many_electron_algorithm","0"); many_electron_algorithm=0; is_many_electron_algorithm=1; wrn_status++; }
   if (!is_namdtime)
   {
     warning("namdtime", "0");
@@ -482,213 +477,190 @@ void InputStructure::set_default()
   }
 }
 
-InputStructure::InputStructure(boost::python::dict params)
+InputStructure::InputStructure(json params)
 {
   init();
-  boost::python::list lkeys = params.keys();
 
-  for (int i = 0; i < len(lkeys); i++)
+  if (!params["energy_units"].is_null())
   {
-    std::string s1;
-    s1 = extract<std::string>(lkeys[i]);
-    //    if(s1=="icondfile"){ icondfile = extract<std::string>(params[s1]); is_icondfile = 1; }
-    //         if(s1=="energy_prefix"){ energy_prefix = extract<std::string>(params[s1]);  is_energy_prefix = 1; }
-    //    else if(s1=="energy_suffix"){ energy_suffix = extract<std::string>(params[s1]);  is_energy_suffix = 1; }
-    if (s1 == "energy_units")
-    {
-      energy_units = extract<std::string>(params[s1]);
-      is_energy_units = 1;
-    }
-
-    else if (s1 == "Ham_re_prefix")
-    {
-      Ham_re_prefix = extract<std::string>(params[s1]);
-      is_Ham_re_prefix = 1;
-    }
-    else if (s1 == "Ham_re_suffix")
-    {
-      Ham_re_suffix = extract<std::string>(params[s1]);
-      is_Ham_re_suffix = 1;
-    }
-    else if (s1 == "Ham_im_prefix")
-    {
-      Ham_im_prefix = extract<std::string>(params[s1]);
-      is_Ham_im_prefix = 1;
-    }
-    else if (s1 == "Ham_im_suffix")
-    {
-      Ham_im_suffix = extract<std::string>(params[s1]);
-      is_Ham_im_suffix = 1;
-    }
-
-    else if (s1 == "Hprime_x_prefix")
-    {
-      Hprime_x_prefix = extract<std::string>(params[s1]);
-      is_Hprime_x_prefix = 1;
-    }
-    else if (s1 == "Hprime_y_prefix")
-    {
-      Hprime_y_prefix = extract<std::string>(params[s1]);
-      is_Hprime_y_prefix = 1;
-    }
-    else if (s1 == "Hprime_z_prefix")
-    {
-      Hprime_z_prefix = extract<std::string>(params[s1]);
-      is_Hprime_z_prefix = 1;
-    }
-    else if (s1 == "Hprime_x_suffix")
-    {
-      Hprime_x_suffix = extract<std::string>(params[s1]);
-      is_Hprime_x_suffix = 1;
-    }
-    else if (s1 == "Hprime_y_suffix")
-    {
-      Hprime_y_suffix = extract<std::string>(params[s1]);
-      is_Hprime_y_suffix = 1;
-    }
-    else if (s1 == "Hprime_z_suffix")
-    {
-      Hprime_z_suffix = extract<std::string>(params[s1]);
-      is_Hprime_z_suffix = 1;
-    }
-
-    //    else if(s1=="nac_re_prefix"){ nac_re_prefix = extract<std::string>(params[s1]);  is_nac_re_prefix = 1; }
-    //    else if(s1=="nac_re_suffix"){ nac_re_suffix = extract<std::string>(params[s1]);  is_nac_re_suffix = 1; }
-    //    else if(s1=="nac_im_prefix"){ nac_im_prefix = extract<std::string>(params[s1]);  is_nac_im_prefix = 1; }
-    //    else if(s1=="nac_im_suffix"){ nac_im_suffix = extract<std::string>(params[s1]);  is_nac_im_suffix = 1; }
-    //    else if(s1=="overlap_re_prefix"){ overlap_re_prefix = extract<std::string>(params[s1]);  is_overlap_re_prefix = 1; }
-    //    else if(s1=="overlap_re_suffix"){ overlap_re_suffix = extract<std::string>(params[s1]);  is_overlap_re_suffix = 1; }
-    else if (s1 == "energy_in_one_file")
-    {
-      energy_in_one_file = extract<std::string>(params[s1]);
-      is_energy_in_one_file = 1;
-    }
-    else if (s1 == "scratch_dir")
-    {
-      scratch_dir = extract<std::string>(params[s1]);
-      is_scratch_dir = 1;
-    }
-
-    else if (s1 == "read_couplings")
-    {
-      read_couplings = extract<std::string>(params[s1]);
-      is_read_couplings = 1;
-    }
-    else if (s1 == "read_overlaps")
-    {
-      read_overlaps = extract<std::string>(params[s1]);
-      is_read_overlaps = 1;
-    }
-    //    else if(s1=="many_electron_algorithm"){ many_electron_algorithm = extract<int>(params[s1]); is_many_electron_algorithm = 1; }
-    else if (s1 == "namdtime")
-    {
-      namdtime = extract<int>(params[s1]);
-      is_namdtime = 1;
-    }
-    else if (s1 == "sh_algo")
-    {
-      sh_algo = extract<int>(params[s1]);
-      is_sh_algo = 1;
-    }
-    else if (s1 == "num_sh_traj")
-    {
-      num_sh_traj = extract<int>(params[s1]);
-      is_num_sh_traj = 1;
-    }
-    else if (s1 == "boltz_flag")
-    {
-      boltz_flag = extract<int>(params[s1]);
-      is_boltz_flag = 1;
-    }
-    else if (s1 == "debug_flag")
-    {
-      debug_flag = extract<int>(params[s1]);
-      is_debug_flag = 1;
-    }
-    else if (s1 == "Temp")
-    {
-      Temp = extract<double>(params[s1]);
-      is_Temp = 1;
-    }
-    else if (s1 == "nucl_dt")
-    {
-      nucl_dt = extract<double>(params[s1]);
-      is_nucl_dt = 1;
-    }
-    else if (s1 == "elec_dt")
-    {
-      elec_dt = extract<double>(params[s1]);
-      is_elec_dt = 1;
-    }
-    else if (s1 == "integrator")
-    {
-      integrator = extract<int>(params[s1]);
-      is_integrator = 1;
-    }
-    else if (s1 == "runtype")
-    {
-      runtype = extract<std::string>(params[s1]);
-      is_runtype = 1;
-    }
-
-    else if (s1 == "alp_bet")
-    {
-      alp_bet = extract<int>(params[s1]);
-      is_alp_bet = 1;
-    }
-    else if (s1 == "decoherence")
-    {
-      decoherence = extract<int>(params[s1]);
-      is_decoherence = 1;
-    }
-    else if (s1 == "regress_mode")
-    {
-      regress_mode = extract<int>(params[s1]);
-      is_regress_mode = 1;
-    }
-
-    else if (s1 == "is_field")
-    {
-      is_field = extract<int>(params[s1]);
-      is_is_field = 1;
-    }
-    else if (s1 == "field_dir")
-    {
-      field_dir = extract<std::string>(params[s1]);
-      is_field_dir = 1;
-    }
-    else if (s1 == "field_protocol")
-    {
-      field_protocol = extract<int>(params[s1]);
-      is_field_protocol = 1;
-    }
-    else if (s1 == "field_Tm")
-    {
-      field_Tm = extract<double>(params[s1]);
-      is_field_Tm = 1;
-    }
-    else if (s1 == "field_T")
-    {
-      field_T = extract<double>(params[s1]);
-      is_field_T = 1;
-    }
-    else if (s1 == "field_freq")
-    {
-      field_freq = extract<double>(params[s1]);
-      is_field_freq = 1;
-    }
-    else if (s1 == "field_freq_units")
-    {
-      field_freq_units = extract<std::string>(params[s1]);
-      is_field_freq_units = 1;
-    }
-    else if (s1 == "field_fluence")
-    {
-      field_fluence = extract<double>(params[s1]);
-      is_field_fluence = 1;
-    }
-
-  } // for i
+    energy_units = params["energy_units"].get<string>();
+    is_energy_units = 1;
+  }
+  if (!params["Ham_re_prefix"].is_null())
+  {
+    Ham_re_prefix = params["Ham_re_prefix"].get<string>();
+    is_Ham_re_prefix = 1;
+  }
+  if (!params["Ham_re_suffix"].is_null())
+  {
+    Ham_re_suffix = params["Ham_re_suffix"].get<string>();
+    is_Ham_re_suffix = 1;
+  }
+  if (!params["Ham_im_prefix"].is_null())
+  {
+    Ham_im_prefix = params["Ham_im_prefix"].get<string>();
+    is_Ham_im_prefix = 1;
+  }
+  if (!params["Ham_im_suffix"].is_null())
+  {
+    Ham_im_suffix = params["Ham_im_suffix"].get<string>();
+    is_Ham_im_suffix = 1;
+  }
+  if (!params["Hprime_x_prefix"].is_null())
+  {
+    Hprime_x_prefix = params["Hprime_x_prefix"].get<string>();
+    is_Hprime_x_prefix = 1;
+  }
+  if (!params["Hprime_y_prefix"].is_null())
+  {
+    Hprime_y_prefix = params["Hprime_y_prefix"].get<string>();
+    is_Hprime_y_prefix = 1;
+  }
+  if (!params["Hprime_z_prefix"].is_null())
+  {
+    Hprime_z_prefix = params["Hprime_z_prefix"].get<string>();
+    is_Hprime_z_prefix = 1;
+  }
+  if (!params["Hprime_x_suffix"].is_null())
+  {
+    Hprime_x_suffix = params["Hprime_x_suffix"].get<string>();
+    is_Hprime_x_suffix = 1;
+  }
+  if (!params["Hprime_y_suffix"].is_null())
+  {
+    Hprime_y_suffix = params["Hprime_y_suffix"].get<string>();
+    is_Hprime_y_suffix = 1;
+  }
+  if (!params["Hprime_z_suffix"].is_null())
+  {
+    Hprime_z_suffix = params["Hprime_z_suffix"].get<string>();
+    is_Hprime_z_suffix = 1;
+  }
+  if (!params["energy_in_one_file"].is_null())
+  {
+    energy_in_one_file = params["energy_in_one_file"].get<string>();
+    is_energy_in_one_file = 1;
+  }
+  if (!params["scratch_dir"].is_null())
+  {
+    scratch_dir = params["scratch_dir"].get<string>();
+    is_scratch_dir = 1;
+  }
+  if (!params["read_couplings"].is_null())
+  {
+    read_couplings = params["read_couplings"].get<string>();
+    is_read_couplings = 1;
+  }
+  if (!params["read_overlaps"].is_null())
+  {
+    read_overlaps = params["read_overlaps"].get<string>();
+    is_read_overlaps = 1;
+  }
+  if (!params["namdtime"].is_null())
+  {
+    namdtime = params["namdtime"].get<int>();
+    is_namdtime = 1;
+  }
+  if (!params["sh_algo"].is_null())
+  {
+    sh_algo = params["sh_algo"].get<int>();
+    is_sh_algo = 1;
+  }
+  if (!params["num_sh_traj"].is_null())
+  {
+    num_sh_traj = params["num_sh_traj"].get<int>();
+    is_num_sh_traj = 1;
+  }
+  if (!params["boltz_flag"].is_null())
+  {
+    boltz_flag = params["boltz_flag"].get<int>();
+    is_boltz_flag = 1;
+  }
+  if (!params["debug_flag"].is_null())
+  {
+    debug_flag = params["debug_flag"].get<int>();
+    is_debug_flag = 1;
+  }
+  if (!params["Temp"].is_null())
+  {
+    Temp = params["Temp"].get<double>();
+    is_Temp = 1;
+  }
+  if (!params["nucl_dt"].is_null())
+  {
+    nucl_dt = params["nucl_dt"].get<double>();
+    is_nucl_dt = 1;
+  }
+  if (!params["elec_dt"].is_null())
+  {
+    elec_dt = params["elec_dt"].get<double>();
+    is_elec_dt = 1;
+  }
+  if (!params["integrator"].is_null())
+  {
+    integrator = params["integrator"].get<int>();
+    is_integrator = 1;
+  }
+  if (!params["runtype"].is_null())
+  {
+    runtype = params["runtype"].get<string>();
+    is_runtype = 1;
+  }
+  if (!params["alp_bet"].is_null())
+  {
+    alp_bet = params["alp_bet"].get<int>();
+    is_alp_bet = 1;
+  }
+  if (!params["decoherence"].is_null())
+  {
+    decoherence = params["decoherence"].get<int>();
+    is_decoherence = 1;
+  }
+  if (!params["regress_mode"].is_null())
+  {
+    regress_mode = params["regress_mode"].get<int>();
+    is_regress_mode = 1;
+  }
+  if (!params["is_field"].is_null())
+  {
+    is_field = params["is_field"].get<int>();
+    is_is_field = 1;
+  }
+  if (!params["field_dir"].is_null())
+  {
+    field_dir = params["field_dir"].get<string>();
+    is_field_dir = 1;
+  }
+  if (!params["field_protocol"].is_null())
+  {
+    field_protocol = params["field_protocol"].get<int>();
+    is_field_protocol = 1;
+  }
+  if (!params["field_Tm"].is_null())
+  {
+    field_Tm = params["field_Tm"].get<double>();
+    is_field_Tm = 1;
+  }
+  if (!params["field_T"].is_null())
+  {
+    field_T = params["field_T"].get<double>();
+    is_field_T = 1;
+  }
+  if (!params["field_freq"].is_null())
+  {
+    field_freq = params["field_freq"].get<double>();
+    is_field_freq = 1;
+  }
+  if (!params["field_freq_units"].is_null())
+  {
+    field_freq_units = params["field_freq_units"].get<string>();
+    is_field_freq_units = 1;
+  }
+  if (!params["field_fluence"].is_null())
+  {
+    field_fluence = params["field_fluence"].get<double>();
+    is_field_fluence = 1;
+  }
 
   echo();
   set_default();

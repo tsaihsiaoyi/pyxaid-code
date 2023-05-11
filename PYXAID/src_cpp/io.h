@@ -21,10 +21,10 @@ using namespace std;
 
 int read_file(std::string filename, int verbose, vector<std::string> &A);
 
-void file2matrix(std::string filename, vector<vector<double> > &m);
-void file2matrix(std::string filename, vector<vector<double> > &m, double scl);
-void file2matrix(std::string filename, vector<vector<int> > &m);
+void file2matrix(std::string filename, vector<vector<double>> &m);
+void file2matrix(std::string filename, vector<vector<double>> &m, double scl);
+void file2matrix(std::string filename, vector<vector<int>> &m);
 
-void show_2D(vector<vector<double> > &in);
+void show_2D(vector<vector<double>> &in);
 
 #endif // IO_H

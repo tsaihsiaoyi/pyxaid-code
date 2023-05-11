@@ -14,8 +14,6 @@
 #include "state.h"
 #include "units.h"
 #include "InputStructure.h"
-#include <boost/python.hpp>
-using namespace boost::python;
 using namespace std;
 
 class ElectronicStructure

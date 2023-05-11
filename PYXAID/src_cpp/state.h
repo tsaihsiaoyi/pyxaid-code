@@ -17,9 +17,9 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <boost/python.hpp>
-using namespace boost::python;
+#include "json.hpp"
 using namespace std;
+using json = nlohmann::json;
 
 int ext2int(int, vector<int> &);
 int delta(vector<int> &A, vector<int> &B, int &a, int &b);
@@ -74,7 +74,7 @@ public:
   void show_state();
 };
 
-void input_iconds(boost::python::dict params, int me_numstates, vector<vector<int> > &icond);
-void input_states(boost::python::dict params, vector<me_state> &states);
+void input_iconds(json params, int me_numstates, vector<vector<int>> &icond);
+void input_states(json params, vector<me_state> &states);
 
 #endif // state_h
