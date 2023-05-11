@@ -36,5 +36,6 @@ pyxaid.o: pyxaid.cpp
 
 clean:
 	if [ -d objs ]; then rm -rf objs; fi
+
 distclean: clean
 	if [ -f ../pyxaid ]; then rm ../pyxaid; fi
