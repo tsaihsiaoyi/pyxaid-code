@@ -1,4 +1,4 @@
-FLAGS= -fPIC -std=c++11
+FLAGS= -std=c++11
 CPP= ${CXX}
 
 pyxaid: obj_dir pyxaid.o aux.o matrix.o state.o ElectronicStructure.o namd.o InputStructure.o io.o random.o
@@ -31,7 +31,7 @@ namd.o: namd.cpp namd.h
 aux.o: aux.cpp aux.h
 	${CPP} ${FLAGS} -c aux.cpp -o objs/aux.o
 
-pyxaid.o: pyxaid.cpp 
+pyxaid.o: pyxaid.cpp
 	${CPP} ${FLAGS} -c pyxaid.cpp -o objs/pyxaid.o
 
 clean:
