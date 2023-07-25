@@ -1,5 +1,6 @@
 FLAGS= -std=c++11
 CPP= ${CXX}
+FC= mpiifort
 
 pyxaid: obj_dir pyxaid.o aux.o matrix.o state.o ElectronicStructure.o namd.o InputStructure.o io.o random.o
 	${CPP} ${FLAGS} -o ../pyxaid objs/*.o
@@ -33,6 +34,10 @@ aux.o: aux.cpp aux.h
 
 pyxaid.o: pyxaid.cpp
 	${CPP} ${FLAGS} -c pyxaid.cpp -o objs/pyxaid.o
+
+ovlap_NORM_OS_allk_mpi:
+	${FC} ${FFLAGS} -c ovlap_NORM_OS_allk_mpi.f90 -o objs/ovlap_NORM_OS_allk_mpi.o
+	${FC} ${FFLAGS} objs/ovlap_NORM_OS_allk_mpi.o -o ../ovlap_NORM_OS_allk_mpi
 
 clean:
 	if [ -d objs ]; then rm -rf objs; fi

@@ -23,7 +23,6 @@ void version()
   cout << " * License, or (at your option) any later version.\n";
   cout << " * http://www.gnu.org/copyleft/gpl.txt\n";
   cout << "***********************************************************/\n";
-  cout << "================================================================================\n";
 }
 
 void developers()
@@ -33,14 +32,12 @@ void developers()
   cout << "Oleg V. Prezhdo                              e-mail: oprezhdo@chem.rochester.edu\n";
   cout << "Hsiaoyi Tsai                                 e-mail: tsaihsiaoyi0228@gmail.com  \n";
   cout << "...\n";
-  cout << "================================================================================\n";
 }
 
 void documentation()
 {
   cout << "================================ Documentation =================================\n";
   cout << "Coming soon...\n";
-  cout << "================================================================================\n";
 }
 
 int main()
