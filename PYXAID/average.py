@@ -224,7 +224,7 @@ def average(namdtime, num_states, iconds, opt, MS, inp_dir, res_dir):
                 # ======================= out file ===============================
                 # Dimension: T x num_states
                 pP = get_file(res_dir+"/sh_pop_ex",
-                              MS[i][j], namdtime, num_states, 3, 2)
+                              MS[i][j], namdtime, num_states, 1, 1, 1)
                 # Dimension:  T x num_macro_states
                 cpP = contract_array(pP, MS)
                 P = add_arrays(P, cpP)
@@ -232,7 +232,7 @@ def average(namdtime, num_states, iconds, opt, MS, inp_dir, res_dir):
                 # ===================== me_pop file ==============================
                 # Dimension: T x num_states
                 cC = get_file(res_dir+"/se_pop_ex",
-                              MS[i][j], namdtime, num_states, 3, 2)
+                              MS[i][j], namdtime, num_states, 1, 1, 1)
                 ccC = contract_array(cC, MS)  # Dimension: T x num_macro_states
                 C = add_arrays(C, ccC)
 

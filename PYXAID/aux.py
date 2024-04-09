@@ -102,7 +102,7 @@ def contract_array(A, Templ):
     return C
 
 
-def get_file(prefix, indx, T, X, shift, N):
+def get_file(prefix, indx, T, X, shift, N, skip = 0):
     # This function reads the file <prefix><indx> as a matrix of dimension
     # T by X (this is what it returns), shift - gives the column offset to
     # start with
@@ -116,7 +116,7 @@ def get_file(prefix, indx, T, X, shift, N):
         B = f.readlines()
         f.close()
 
-        t = 0
+        t = skip
         while t < T:
             tmp = B[t].split()
             j = 0
@@ -135,11 +135,17 @@ def write_array(prefix, in_ex, T, X, Arr, denom):
     f = open(prefix+str(in_ex), "w")
     t = 0
     line = ""
+    line = line + "time "
+    i=0
+    while i < X:
+        line = line + "P("+str(i)+") "
+        i = i + 1
+    line = line + "\n"
     while t < T:
-        line = line + "time "+str(t)+" "
+        line = line + str(t)+" "
         j = 0
         while j < X:
-            line = line + "P("+str(j)+")= "+str(Arr[t][j]/denom)+" "
+            line = line + str(Arr[t][j]/denom)+" "
             j = j + 1
         line = line + "\n"
         t = t + 1
