@@ -59,6 +59,6 @@ pyxaid_core.so: pyxaid_core.o wfc_export.o wfc_functions.o wfc_QE_methods.o wfc_
 	cp pyxaid_core.so ../.
 
 clean:
-	rm *.o
-	rm pyxaid_core.so
+	if [ -f *.o ]; then rm *.o; fi
+	if [ -f pyxaid_core.so]; then rm pyxaid_core.so; fi
 	if [ -f ../pyxaid_core.so ]; then rm ../pyxaid_core.so; fi
