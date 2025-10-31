@@ -1,10 +1,9 @@
-# FLAGS= -fno-for-scope -O2 -fPIC
-FLAGS= -fPIC -std=c++11
-CPP= icpc
-# IDENTIFY YOUR INCLUDE PATH WHICH CONTAIN BOOST AND PYTHON
+FLAGS=-Wno-deprecated-declarations -fPIC
+CPP=g++
+
 p1=${CONDA_PREFIX}/include
-p2=${p1}/python*
 pl1=${CONDA_PREFIX}/lib
+p2=${p1}/python*
 
 I=-I ${p1} -I ${p2}
 L=-L ${pl1}
@@ -53,8 +52,6 @@ wfc_export.o: wfc_basic_methods.o wfc_QE_methods.o wfc_functions.o wfc_export.cp
 pyxaid_core.o: pyxaid_core.cpp 
 	${CPP} ${FLAGS} ${I} -c pyxaid_core.cpp
 
-
-
 pyxaid_core.so: pyxaid_core.o wfc_export.o wfc_functions.o wfc_QE_methods.o wfc_basic_methods.o \
         aux.o matrix.o state.o ElectronicStructure.o namd.o namd_export.o InputStructure.o io.o random.o
 	${CPP} ${FLAGS} ${I} -shared -o pyxaid_core.so pyxaid_core.o wfc_export.o wfc_functions.o \
@@ -66,4 +63,3 @@ clean:
 	rm *.o
 	rm pyxaid_core.so
 	if [ -f ../pyxaid_core.so ]; then rm ../pyxaid_core.so; fi
-
