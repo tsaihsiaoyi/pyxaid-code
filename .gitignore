@@ -6,3 +6,6 @@
 *.pyc
 .vscode
 testsuite
+
+build/
+*.egg-info/

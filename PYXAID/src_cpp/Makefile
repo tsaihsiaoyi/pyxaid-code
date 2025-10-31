@@ -1,5 +1,4 @@
 FLAGS=-Wno-deprecated-declarations -fPIC
-CPP=g++
 
 p1=${CONDA_PREFIX}/include
 pl1=${CONDA_PREFIX}/lib

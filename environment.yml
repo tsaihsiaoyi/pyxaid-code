@@ -1,0 +1,17 @@
+# Conda environment file for this project
+# This will create a conda environment named `pyxaid` with Python and key dependencies.
+# Note: `cxx-compiler` is explicitly requested from the `anaconda` channel using the channel-qualified package name
+# to follow your request to install it from `-c anaconda`.
+
+name: pyxaid
+
+dependencies:
+  - anaconda::numpy
+  - anaconda::boost
+  - anaconda::cxx-compiler
+
+# Usage:
+#   conda env create -f environment.yml
+#   conda activate pyxaid
+# To update an existing env from this file:
+#   conda env update -f environment.yml --prune
