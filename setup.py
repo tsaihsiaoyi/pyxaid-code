@@ -62,7 +62,7 @@ def run_make():
             env['CPP'] = cxx
             print('Using C++ compiler:', cxx)
         else:
-            print('No C++ compiler detected in environment/PATH — proceeding with default make environment')
+            raise RuntimeError('No suitable C++ compiler found in environment or PATH.')
 
         subprocess.check_call(['make', '-C', src_dir, 'all', '-j8'], env=env)
 
@@ -72,16 +72,26 @@ def run_make():
         if os.path.exists(so_file):
             print('Built shared library found at:', so_file)
         else:
-            print('No built shared library found at expected location:', so_file)
+            raise RuntimeError('Build completed but no shared library found at expected location: ' + so_file)
 
     else:
-        print('No Makefile found at:', makefile)
+        raise RuntimeError('Makefile not found in source directory: ' + src_dir)
 
 
 class build_py(_build_py):
     def run(self):
         run_make()
         super().run()
+        
+        #move built .so to package directory
+        here = os.path.abspath(os.path.dirname(__file__))
+        so_file = os.path.join(here, 'PYXAID', 'pyxaid_core.so')
+        if os.path.exists(so_file):
+            self.mkpath(os.path.join(self.build_lib, 'PYXAID'))
+            shutil.copy2(so_file, os.path.join(self.build_lib, 'PYXAID'))
+            print('Copied built library to build directory:', os.path.join(self.build_lib, 'PYXAID'))
+        else:
+            raise RuntimeError('Build failed: no built shared library found')
 
 
 class develop(_develop):
@@ -92,44 +102,7 @@ class develop(_develop):
 
 class install(_install):
     def run(self):
-        run_make()
-        # Run the normal install which will copy package files into the
-        # installation target (usually site-packages). After that, copy the
-        # compiled shared object into the installed package directory so the
-        # runtime import can find it.
         super().run()
-
-        # Determine where the package was installed. The install command sets
-        # `install_lib` to the target library directory (e.g. .../site-packages).
-        target_lib = getattr(self, 'install_lib', None)
-        if not target_lib:
-            # Fallbacks: use sysconfig or site
-            try:
-                import sysconfig
-                target_lib = sysconfig.get_paths().get('purelib')
-            except Exception:
-                import site
-                sitedirs = site.getsitepackages()
-                target_lib = sitedirs[0] if sitedirs else None
-
-        if target_lib:
-            installed_pkg_dir = os.path.join(target_lib, 'PYXAID')
-            # Find source-built .so (prefer src_cpp then source package dir)
-            here = os.path.abspath(os.path.dirname(__file__))
-            so_file = os.path.join(here, 'PYXAID', 'pyxaid_core.so')
-            if os.path.exists(so_file):
-                try:
-                    if os.path.isdir(installed_pkg_dir):
-                        shutil.copy2(so_file, installed_pkg_dir)
-                        print('Installed built library', so_file, '->', installed_pkg_dir)
-                    else:
-                        print('Warning: installed package dir not found:', installed_pkg_dir)
-                except Exception as e:
-                    print('Warning: failed to copy built .so to installed package dir:', e)
-            else:
-                print('No built .so found to copy to installed package dir')
-        else:
-            print('Warning: could not determine install target directory to copy .so')
 
 here = os.path.abspath(os.path.dirname(__file__))
 readme = os.path.join(here, 'README.md')
